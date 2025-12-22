@@ -21,16 +21,7 @@
         modules = [
           ./configuration.nix
           ./hosts/qby-laptop/default.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            home-manager.users.cubewhy = import ./home/cubewhy.nix;
-
-            home-manager.extraSpecialArgs = { inherit inputs; };
-          }
+          ./home/default.nix
         ];
       };
     };
