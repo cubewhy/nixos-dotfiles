@@ -37,7 +37,7 @@
     fastfetch
     librewolf
     obs-studio
-    jetbrains.idea-ultimate
+    jetbrains.idea
     vscode
     vlc
     kdePackages.kate
