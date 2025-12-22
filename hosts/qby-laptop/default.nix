@@ -48,19 +48,6 @@
     dpi = 180;
   };
 
-  environment.systemPackages = with pkgs; [
-    ollama
-  ];
-
-  services.ollama = {
-    enable = false;
-  };
-
-  services.open-webui = {
-    enable = false;
-    port = 40080;
-  };
-
   hardware.nvidia = {
     prime = {
       offload = {
