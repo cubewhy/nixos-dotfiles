@@ -1,6 +1,14 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
+  imports = [
+    ./locale/zh-cn.nix
+
+    ./software/neovim.nix
+    ./software/nix-ld.nix
+    ./software/fcitx5.nix
+  ];
+
   boot.loader = {
     systemd-boot = {
       enable = true;
@@ -19,12 +27,6 @@
 
   networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  networking.firewall = rec {
-    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
-    allowedUDPPortRanges = allowedTCPPortRanges;
-    checkReversePath = "loose"; 
-  };
-
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
@@ -33,77 +35,11 @@
     LIBSQLITE = "${pkgs.sqlite.out}/lib/libsqlite3.so";
   };
 
-  time.timeZone = "Asia/Shanghai";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "zh_CN.UTF-8";
-    LC_IDENTIFICATION = "zh_CN.UTF-8";
-    LC_MEASUREMENT = "zh_CN.UTF-8";
-    LC_MONETARY = "zh_CN.UTF-8";
-    LC_NAME = "zh_CN.UTF-8";
-    LC_NUMERIC = "zh_CN.UTF-8";
-    LC_PAPER = "zh_CN.UTF-8";
-    LC_TELEPHONE = "zh_CN.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
-  i18n.inputMethod = {
-   type = "fcitx5";
-   enable = true;
-   fcitx5.waylandFrontend = true;
-   fcitx5.addons = with pkgs; [
-     fcitx5-rime
-     fcitx5-fluent
-   ];
-  };
-
-  services.xserver = {
-    enable = true;
-    excludePackages = [ pkgs.xterm ];
-  };
-
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  services.printing.enable = true;
-
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
   nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
-
-  programs.neovim = {
-    enable = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = true;
-  };
-
-  programs.steam = {
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-
-    extraPackages = with pkgs; [
-      gamescope
-    ];
-  };
 
   environment.systemPackages = with pkgs; [
     git
@@ -111,21 +47,13 @@
     dig
     wineWowPackages.yabridge
 
-    ast-grep
-    tree-sitter
     wayland-utils
-    wl-clipboard
     net-tools
-    lazygit
     neovide
-    fzf
     rustup
     uv
     psmisc
     htop-vim
-
-    lua51Packages.lua
-    luajitPackages.luarocks
 
     gnumake
     pkg-config
@@ -151,130 +79,6 @@
     fd
   ];
 
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-      zlib
-      zstd
-      stdenv.cc.cc
-      stdenv.cc.cc.lib
-      curl
-      openssl
-      attr
-      libssh
-      bzip2
-      libxml2
-      acl
-      libsodium
-      util-linux
-      xz
-      systemd
-
-      xorg.libXcomposite
-      xorg.libXtst
-      xorg.libXrandr
-      xorg.libXext
-      xorg.libX11
-      xorg.libXfixes
-      libGL
-      libva
-      pipewire
-      xorg.libxcb
-      xorg.libXdamage
-      xorg.libxshmfence
-      xorg.libXxf86vm
-      libelf
-
-      glib
-      gtk2
-
-      networkmanager      
-      vulkan-loader
-      libgbm
-      libdrm
-      libxcrypt
-      coreutils
-      pciutils
-      zenity
-      
-      xorg.libXinerama
-      xorg.libXcursor
-      xorg.libXrender
-      xorg.libXScrnSaver
-      xorg.libXi
-      xorg.libSM
-      xorg.libICE
-      gnome2.GConf
-      nspr
-      nss
-      cups
-      libcap
-      SDL2
-      libusb1
-      dbus-glib
-      ffmpeg
-      libudev0-shim
-      
-      gtk3
-      icu
-      libnotify
-      gsettings-desktop-schemas
-      
-      xorg.libXt
-      xorg.libXmu
-      libogg
-      libvorbis
-      SDL
-      SDL2_image
-      glew110
-      libidn
-      tbb
-      
-      flac
-      freeglut
-      libjpeg
-      libpng
-      libpng12
-      libsamplerate
-      libmikmod
-      libtheora
-      libtiff
-      pixman
-      speex
-      SDL_image
-      SDL_ttf
-      SDL_mixer
-      SDL2_ttf
-      SDL2_mixer
-      libappindicator-gtk2
-      libdbusmenu-gtk2
-      libindicator-gtk2
-      libcaca
-      libcanberra
-      libgcrypt
-      libvpx
-      librsvg
-      xorg.libXft
-      libvdpau
-      pango
-      cairo
-      atk
-      gdk-pixbuf
-      fontconfig
-      freetype
-      dbus
-      alsa-lib
-      expat
-      libxkbcommon
-
-      libxcrypt-legacy
-      libGLU 
-
-      fuse
-      e2fsprogs
-
-     (pkgs.runCommand "steamrun-lib" {} "mkdir $out; ln -s ${pkgs.steam-run.fhsenv}/usr/lib64 $out/lib")
-  ];
-
   users.users.cubewhy = {
     isNormalUser = true;
     description = "cubewhy";
@@ -286,7 +90,6 @@
     noto-fonts
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
-    source-han-sans
     liberation_ttf
     fira-code
     fira-code-symbols

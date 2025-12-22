@@ -1,13 +1,21 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
     [
       ./hardware-configuration.nix
+
       ../../desktop/kde-plasma.nix
+
+      ../../software/mihomo.nix
+      ../../software/wireshark.nix
+      ../../software/steam.nix
+
       ../../hardware/nvidia.nix
       ../../hardware/amdgpu.nix
       ../../hardware/bluetooth.nix
+      ../../hardware/apple-keyboard.nix
+      ../../hardware/remap-copilot.nix
     ];
 
   boot.loader = {
@@ -21,39 +29,13 @@
     };
   };
 
-  boot.extraModprobeConfig = ''
-    options hid_apple fnmode=2
-  '';
-
-  services.udev.extraHwdb = ''
-    evdev:input:*
-     KEYBOARD_KEY_7009c=unknown
-     KEYBOARD_KEY_700e8=unknown
-  '';
-
   boot.kernelParams = [
     "amdgpu.dcdebugmask=0x10"
     "amdgpu.sg_display=0"
     "amdgpu.runpm=0"
   ];
 
-  boot.kernelModules = [
-    "usbmon"
-    "tun"
-  ];
-
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-  };
-
-  nixpkgs.overlays = [
-    inputs.neovim-nightly-overlay.overlays.default
-  ];
-
   networking.hostName = "qby-laptop";
-
-  networking.proxy.default = "http://127.0.0.1:7890";
 
   environment.variables = {
     GDK_SCALE = "2";
@@ -65,64 +47,17 @@
     dpi = 180;
   };
 
-
-  users.users.cubewhy = {
-    extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" "libvirtd" ];
-  };
-
-  programs.wireshark = {
-    enable = true;
-    usbmon.enable = true;
-    package = pkgs.wireshark;
-  };
-
-  programs.steam.enable = true;
-
   environment.systemPackages = with pkgs; [
     ollama
   ];
 
   services.ollama = {
     enable = false;
-    acceleration = "cuda";
   };
 
   services.open-webui = {
     enable = false;
     port = 40080;
-  };
-
-  environment.etc."libinput/local-overrides.quirks".text = ''
-    [Serial Keyboards]
-    MatchUdevType=keyboard
-    MatchName=keyd virtual keyboard
-    AttrKeyboardIntegration=internal
-  '';
-
-  services.keyd = {
-    enable = true;
-    keyboards = {
-      default = {
-        ids = [ "0001:0001:09b4e68d" ];
-        settings = {
-          main = {
-            "leftshift+leftmeta+f23" = "rightcontrol";
-          };
-        };
-      };
-    };
-  };
-
-  services.mihomo = {
-    enable = true;
-    configFile = "/etc/mihomo/config.yaml"; 
-
-    tunMode = true;
-    webui = pkgs.metacubexd; 
-  };
-
-  networking.firewall = {
-    trustedInterfaces = [ "mihomo" ];
   };
 
   hardware.nvidia = {
