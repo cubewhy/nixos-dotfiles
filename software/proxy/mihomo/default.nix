@@ -1,7 +1,10 @@
 # Notes:
 # You can manage your subscriptions with Substore by accessing the following url
 # http://127.0.0.1:23001
-# Never open the 23001 port to the public!
+# (You need to create a proxy collection called `subscriptions` to make the things work)
+# Switch node with the webui
+# http://127.0.0.1:9090/ui
+# Never open the 23001 and 9090 port to the public!
 
 { pkgs, ... }:
 
