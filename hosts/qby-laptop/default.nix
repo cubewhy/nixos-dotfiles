@@ -5,9 +5,9 @@
     [
       ./hardware-configuration.nix
       ../../desktop/kde-plasma.nix
-      ../../drivers/nvidia.nix
-      ../../drivers/amdgpu.nix
-      ../../drivers/bluetooth.nix
+      ../../hardware/nvidia.nix
+      ../../hardware/amdgpu.nix
+      ../../hardware/bluetooth.nix
     ];
 
   boot.loader = {
