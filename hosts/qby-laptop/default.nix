@@ -54,7 +54,7 @@
     (final: prev: {
       linux-firmware = prev.linux-firmware.overrideAttrs (oldAttrs: {
         postInstall = (oldAttrs.postInstall or "") + ''
-          cp ${./amdgpu}/* $out/lib/firmware/amdgpu/
+          cp ${../amdgpu}/* $out/lib/firmware/amdgpu/
         '';
       });
     })
