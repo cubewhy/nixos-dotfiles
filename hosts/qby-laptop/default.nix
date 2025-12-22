@@ -10,6 +10,7 @@
       ../../software/proxy/mihomo/default.nix
       ../../software/wireshark.nix
       ../../software/steam.nix
+      ../../software/kvm.nix
 
       ../../hardware/nvidia.nix
       ../../hardware/amdgpu.nix
