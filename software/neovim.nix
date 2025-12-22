@@ -11,7 +11,6 @@
 
     ast-grep
     tree-sitter
-    wayland-utils
     wl-clipboard
     lazygit
     fzf

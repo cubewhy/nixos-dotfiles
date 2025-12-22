@@ -8,6 +8,10 @@
     ./software/nix-ld.nix
     ./software/fcitx5.nix
     ./software/docker.nix
+    ./software/dev/python.nix
+    ./software/dev/rust.nix
+
+    ./software/fonts/coding-fonts.nix
   ];
 
   boot.loader = {
@@ -48,10 +52,7 @@
     dig
     wineWowPackages.yabridge
 
-    wayland-utils
     net-tools
-    rustup
-    uv
     psmisc
     htop-vim
 
@@ -66,11 +67,6 @@
     unzip
     pciutils
 
-    (python3.withPackages (python-pkgs: with python-pkgs; [
-      pysocks
-    ]))
-
-    sqlite
     clang
 
     nodejs
@@ -88,15 +84,8 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-color-emoji
-    nerd-fonts.jetbrains-mono
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
   ];
+
   fonts.fontconfig.useEmbeddedBitmaps = true;
 
   programs.mtr.enable = true;
