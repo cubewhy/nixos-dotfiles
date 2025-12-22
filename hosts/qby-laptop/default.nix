@@ -1,9 +1,13 @@
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports =
     [
       ./hardware-configuration.nix
+      ../../desktop/kde-plasma.nix
+      ../../drivers/nvidia.nix
+      ../../drivers/amdgpu.nix
+      ../../drivers/bluetooth.nix
     ];
 
   boot.loader = {
@@ -44,13 +48,6 @@
   };
 
   nixpkgs.overlays = [
-    (final: prev: {
-      linux-firmware = prev.linux-firmware.overrideAttrs (oldAttrs: {
-        postInstall = (oldAttrs.postInstall or "") + ''
-          cp ${../../amdgpu}/* $out/lib/firmware/amdgpu/
-        '';
-      });
-    })
     inputs.neovim-nightly-overlay.overlays.default
   ];
 
@@ -68,15 +65,11 @@
     dpi = 180;
   };
 
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
 
   users.users.cubewhy = {
     extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" "libvirtd" ];
   };
 
-  programs.kdeconnect.enable = true;
   programs.wireshark = {
     enable = true;
     usbmon.enable = true;
@@ -86,55 +79,6 @@
   programs.steam.enable = true;
 
   environment.systemPackages = with pkgs; [
-    dig
-    wineWowPackages.yabridge
-    wget
-    git
-
-    ast-grep
-    tree-sitter
-    kdePackages.kcharselect
-    kdePackages.plasma-browser-integration
-    kdePackages.sddm-kcm
-    kdePackages.kdialog
-    wayland-utils
-    wl-clipboard
-    net-tools
-    lazygit
-    neovide
-    fzf
-    rustup
-    uv
-    psmisc
-    htop-vim
-
-    lua51Packages.lua
-    luajitPackages.luarocks
-
-    gnumake
-    pkg-config
-    cmake
-    stdenv.cc.cc
-    stdenv.cc.cc.lib
-    buildPackages.stdenv.cc
-    glibc
-
-    unzip
-    pciutils
-
-    (python3.withPackages (python-pkgs: with python-pkgs; [
-      pysocks
-      pylatexenc
-    ]))
-
-    pinentry-qt
-    sqlite
-
-    nodejs
-    pnpm
-    rocmPackages.llvm.clang-unwrapped
-    ripgrep
-    fd
     ollama
   ];
 
@@ -181,34 +125,7 @@
     trustedInterfaces = [ "mihomo" ];
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Experimental = true;
-        FastConnectable = true;
-      };
-      Policy = {
-        AutoEnable = true;
-      };
-    };
-  };
-
-  hardware.graphics = {
-    enable = true;
-  };
-
-  services.xserver.videoDrivers = [
-    "nvidia"
-    "amdgpu"
-  ];
-
   hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = true;
-
     prime = {
       offload = {
         enable = true;
@@ -218,12 +135,5 @@
       nvidiaBusId = "PCI:01:00:0";
       amdgpuBusId = "PCI:06:00:0";
     };
-
-    open = true;
-    nvidiaSettings = false;
-
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-
-  hardware.nvidia-container-toolkit.enable = true;
 }

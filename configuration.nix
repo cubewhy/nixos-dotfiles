@@ -105,6 +105,52 @@
     ];
   };
 
+  environment.systemPackages = with pkgs; [
+    git
+    wget
+    dig
+    wineWowPackages.yabridge
+
+    ast-grep
+    tree-sitter
+    wayland-utils
+    wl-clipboard
+    net-tools
+    lazygit
+    neovide
+    fzf
+    rustup
+    uv
+    psmisc
+    htop-vim
+
+    lua51Packages.lua
+    luajitPackages.luarocks
+
+    gnumake
+    pkg-config
+    cmake
+    stdenv.cc.cc
+    stdenv.cc.cc.lib
+    buildPackages.stdenv.cc
+    glibc
+
+    unzip
+    pciutils
+
+    (python3.withPackages (python-pkgs: with python-pkgs; [
+      pysocks
+    ]))
+
+    sqlite
+    clang
+
+    nodejs
+    pnpm
+    ripgrep
+    fd
+  ];
+
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
       zlib
