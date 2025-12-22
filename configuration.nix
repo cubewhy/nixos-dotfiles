@@ -74,13 +74,6 @@
     fd
   ];
 
-  users.users.cubewhy = {
-    isNormalUser = true;
-    description = "cubewhy";
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
-    shell = pkgs.zsh;
-  };
-
   fonts.packages = with pkgs; [
     noto-fonts
   ];

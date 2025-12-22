@@ -5,10 +5,6 @@
     "usbmon"
   ];
 
-  users.users.cubewhy = {
-    extraGroups = [ "wireshark" ];
-  };
-
   programs.wireshark = {
     enable = true;
     usbmon.enable = true;
