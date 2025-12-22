@@ -49,7 +49,6 @@
 
     wayland-utils
     net-tools
-    neovide
     rustup
     uv
     psmisc
