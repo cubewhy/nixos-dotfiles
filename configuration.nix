@@ -51,7 +51,6 @@
     git
     wget
     dig
-    wineWowPackages.yabridge
 
     net-tools
     psmisc
