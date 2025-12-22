@@ -40,6 +40,8 @@
     jetbrains.idea-ultimate
     vscode
     vlc
+    kdePackages.kate
+    thunderbird
 
     krita
     kdePackages.kdenlive

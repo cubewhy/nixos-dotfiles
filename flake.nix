@@ -17,6 +17,7 @@
         specialArgs = { inherit inputs; };
 
         modules = [
+          ./configuration.nix
           ./hosts/qby-laptop/default.nix
 
           home-manager.nixosModules.home-manager
