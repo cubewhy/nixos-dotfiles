@@ -10,6 +10,7 @@
     ./software/docker.nix
     ./software/dev/python.nix
     ./software/dev/rust.nix
+    ./software/dev/nodejs.nix
 
     ./software/fonts/coding-fonts.nix
   ];
@@ -69,8 +70,6 @@
 
     clang
 
-    nodejs
-    pnpm
     ripgrep
     fd
   ];
