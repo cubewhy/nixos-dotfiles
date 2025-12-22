@@ -7,7 +7,7 @@
 
       ../../desktop/kde-plasma.nix
 
-      ../../software/mihomo.nix
+      ../../software/proxy/mihomo/default.nix
       ../../software/wireshark.nix
       ../../software/steam.nix
 

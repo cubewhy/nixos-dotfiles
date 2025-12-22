@@ -11,7 +11,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, neovim-nightly-overlay, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       qby-laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -21,7 +21,17 @@
         modules = [
           ./configuration.nix
           ./hosts/qby-laptop/default.nix
-          ./home/default.nix
+
+          # Enable home-manager for my laptop
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.cubewhy = import ./home/cubewhy.nix;
+
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
     };

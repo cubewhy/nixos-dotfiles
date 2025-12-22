@@ -7,6 +7,7 @@
     ./software/neovim.nix
     ./software/nix-ld.nix
     ./software/fcitx5.nix
+    ./software/docker.nix
   ];
 
   boot.loader = {
@@ -119,8 +120,6 @@
   services.spice-vdagentd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.daemon.settings.features.cdi = true;
 
   nix.settings = {
     substituters = [ 
