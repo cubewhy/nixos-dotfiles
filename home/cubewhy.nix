@@ -3,7 +3,9 @@
 {
   imports = [
     ./software/lazyvim.nix
+    ./software/direnv.nix
   ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "cubewhy";
@@ -85,7 +87,7 @@
     signing = {
       key = "FA7C57A5D22986CC9FFF44ACB3D5C1917623163A"; 
       signByDefault = true;
-      format = "openpgp"; 
+      format = "openpgp";
     };
     settings = {
       user = {
@@ -93,12 +95,6 @@
         email = "61075476+cubewhy@users.noreply.github.com";
       };
     };
-  };
-
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
   };
 
   # Home Manager can also manage your environment variables through
