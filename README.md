@@ -17,6 +17,9 @@ sudo nixos-rebuild switch --flake .#<machine-name>
 
 - Create new `<machine-name>/default.nix` file in the `hosts/` folder
 - Create new `<username>.nix` file in the `home/` folder if you need home-manager
+- Copy `hardware-configuration.nix` from `/etc/nixos`
+  (make sure import it at `default.nix` you create from the last step,
+  otherwise your computer won't start)
 - Add imports for your favorite packages
 - Modify the `nixosConfigurations` inside `flake.nix` with this format
 
