@@ -14,6 +14,7 @@
       ../../software/steam.nix
       ../../software/wine.nix
       ../../software/kvm.nix
+      ../../software/distrobox.nix
 
       ../../hardware/nvidia.nix
       ../../hardware/amdgpu.nix
