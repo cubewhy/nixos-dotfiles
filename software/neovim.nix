@@ -2,9 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    # The gui client for nvim
-    neovide
-
     # Dependencies required by nvim
     git
     wget

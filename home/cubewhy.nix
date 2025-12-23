@@ -45,20 +45,21 @@
     obs-studio
     jetbrains.idea
     vscode
+    neovide
+
     vlc
-    kdePackages.kate
     thunderbird
 
     krita
+    kdePackages.kate
     kdePackages.kdenlive
     kdePackages.ktorrent
     kdePackages.kcolorchooser
 
-    libreoffice-qt-fresh
-
-    cutter
-    gimp-with-plugins
     kicad
+    cutter
+    libreoffice-qt-fresh
+    gimp-with-plugins
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
