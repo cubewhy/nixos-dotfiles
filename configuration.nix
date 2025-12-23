@@ -15,15 +15,6 @@
     ./software/fonts/coding-fonts.nix
   ];
 
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-    };
-    efi = {
-      canTouchEfiVariables = true;
-    };
-  };
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

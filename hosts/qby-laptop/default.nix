@@ -4,6 +4,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      ../../software/bootloader/systemd-boot.nix
       ../../users/cubewhy.nix
 
       ../../desktop/kde-plasma.nix
