@@ -30,4 +30,8 @@
   environment.sessionVariables = {
     PINENTRY_KDE_USE_WALLET = "1";
   };
+
+  systemd.user.services.gpg-agent.environment = {
+    PINENTRY_KDE_USE_WALLET = "1";
+  };
 }
