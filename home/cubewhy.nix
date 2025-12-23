@@ -4,6 +4,7 @@
   imports = [
     ./software/lazyvim.nix
     ./software/direnv.nix
+    ./software/rime.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
