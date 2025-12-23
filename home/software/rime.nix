@@ -1,14 +1,14 @@
 # Notes:
 # This configuration fetches Rime configuration from
-# https://github.com/wongdean/rime-settings/tree/508b0f373fd1a2475a8f531867550220193b30c5
+# https://github.com/cubewhy/rime-settings/tree/bd1d5044f0680571cb6d738140a480418e374f24
 { pkgs, lib, ... }:
 
 let
   rimeSettings = pkgs.fetchFromGitHub {
-    owner = "wongdean";
+    owner = "cubewhy";
     repo = "rime-settings";
-    rev = "508b0f373fd1a2475a8f531867550220193b30c5";
-    hash = "sha256-ZQlFAEnmbtASp/+l/9TEO0+Tys5nhAgYHNmBy6IpbmU="; 
+    rev = "bd1d5044f0680571cb6d738140a480418e374f24";
+    hash = "sha256-JCJc0mCFGxB332HUsL61XrcMN95nBKTNG/KFkfPvpt0=";
   };
 in
 {
