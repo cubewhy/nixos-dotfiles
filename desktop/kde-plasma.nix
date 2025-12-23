@@ -21,7 +21,13 @@
     kdePackages.plasma-browser-integration
     kdePackages.sddm-kcm
     kdePackages.kdialog
-
-    pinentry-qt
   ];
+
+  programs.gnupg.agent = {
+    pinentryPackage = pkgs.pinentry-qt;
+  };
+
+  environment.sessionVariables = {
+    PINENTRY_KDE_USE_WALLET = "1";
+  };
 }
