@@ -1,13 +1,11 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   hardware.graphics = {
     enable = true;
   };
 
   services.xserver = {
     enable = true;
-    excludePackages = [ pkgs.xterm ];
+    excludePackages = [pkgs.xterm];
   };
 
   services.xserver.xkb = {
@@ -26,7 +24,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
 
   environment.systemPackages = with pkgs; [
     wayland-utils

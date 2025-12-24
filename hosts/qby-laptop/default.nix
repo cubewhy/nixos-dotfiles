@@ -1,27 +1,24 @@
-{ pkgs, ... }:
+{pkgs, ...}: {
+  imports = [
+    ./hardware-configuration.nix
+    ../../software/bootloader/systemd-boot.nix
+    ../../users/cubewhy.nix
 
-{
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../software/bootloader/systemd-boot.nix
-      ../../users/cubewhy.nix
+    ../../desktop/kde-plasma.nix
 
-      ../../desktop/kde-plasma.nix
+    ../../software/proxy/mihomo/default.nix
+    ../../software/wireshark.nix
+    ../../software/steam.nix
+    ../../software/wine.nix
+    ../../software/kvm.nix
+    ../../software/distrobox.nix
 
-      ../../software/proxy/mihomo/default.nix
-      ../../software/wireshark.nix
-      ../../software/steam.nix
-      ../../software/wine.nix
-      ../../software/kvm.nix
-      ../../software/distrobox.nix
-
-      ../../hardware/nvidia.nix
-      ../../hardware/amdgpu.nix
-      ../../hardware/bluetooth.nix
-      ../../hardware/apple-keyboard.nix
-      ../../hardware/remap-copilot.nix
-    ];
+    ../../hardware/nvidia.nix
+    ../../hardware/amdgpu.nix
+    ../../hardware/bluetooth.nix
+    ../../hardware/apple-keyboard.nix
+    ../../hardware/remap-copilot.nix
+  ];
 
   boot.loader = {
     systemd-boot = {

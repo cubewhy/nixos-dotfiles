@@ -1,12 +1,10 @@
-{ ... }:
-
-{
+{...}: {
   virtualisation.oci-containers.containers.sub-store = {
     image = "xream/sub-store:http-meta";
 
     autoStart = true;
 
-    extraOptions = [ "--network=host" ];
+    extraOptions = ["--network=host"];
 
     environment = {
       SUB_STORE_BACKEND_API_HOST = "127.0.0.1";

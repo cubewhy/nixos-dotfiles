@@ -5,10 +5,7 @@
 # Switch node with the webui
 # http://127.0.0.1:9090/ui
 # Never open the 23001 and 9090 port to the public!
-
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ../substore.nix
   ];
@@ -25,15 +22,15 @@
   ];
 
   networking.firewall = {
-    checkReversePath = "loose"; 
+    checkReversePath = "loose";
   };
 
   services.mihomo = {
     enable = true;
-    configFile = "/etc/mihomo/config.yaml"; 
+    configFile = "/etc/mihomo/config.yaml";
 
     tunMode = true;
-    webui = pkgs.metacubexd; 
+    webui = pkgs.metacubexd;
   };
 
   environment.etc."mihomo/config.yaml" = {
@@ -43,6 +40,6 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = [ "mihomo" ];
+    trustedInterfaces = ["mihomo"];
   };
 }

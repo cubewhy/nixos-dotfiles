@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./software/lazyvim.nix
     ./software/direnv.nix
@@ -87,13 +85,13 @@
   programs.git = {
     enable = true;
     signing = {
-      key = "FA7C57A5D22986CC9FFF44ACB3D5C1917623163A"; 
+      key = "FA7C57A5D22986CC9FFF44ACB3D5C1917623163A";
       signByDefault = true;
       format = "openpgp";
     };
     settings = {
       user = {
-        name  = "cubewhy";
+        name = "cubewhy";
         email = "61075476+cubewhy@users.noreply.github.com";
       };
     };
@@ -122,10 +120,10 @@
   # home.pointerCursor = {
   #   gtk.enable = true;
   #   x11.enable = true;
-  #   package = pkgs.kdePackages.breeze; 
-  #   name = "breeze_cursors"; 
+  #   package = pkgs.kdePackages.breeze;
+  #   name = "breeze_cursors";
   #
-  #   size = 48; 
+  #   size = 48;
   # };
 
   # Let Home Manager install and manage itself.

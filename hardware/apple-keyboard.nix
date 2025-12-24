@@ -1,6 +1,4 @@
-{... }:
-
-{
+{...}: {
   # https://github.com/cubewhy/open-ganss-gs-3104t-pro
   boot.extraModprobeConfig = ''
     options hid_apple fnmode=2

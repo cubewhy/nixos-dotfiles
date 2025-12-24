@@ -1,6 +1,4 @@
-{ pkgs, inputs, ... }:
-
-{
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     # Dependencies required by nvim
     git
@@ -26,9 +24,10 @@
 
     unzip
 
-    (python3.withPackages (python-pkgs: with python-pkgs; [
-      pysocks
-    ]))
+    (python3.withPackages (python-pkgs:
+      with python-pkgs; [
+        pysocks
+      ]))
 
     sqlite
     clang
