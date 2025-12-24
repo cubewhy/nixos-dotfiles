@@ -1,10 +1,6 @@
 { ... }:
 
 {
-  imports = [
-    ../../software/docker.nix
-  ];
-
   virtualisation.oci-containers.containers.sub-store = {
     image = "xream/sub-store:http-meta";
 

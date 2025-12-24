@@ -7,7 +7,7 @@
     ./software/neovim.nix
     ./software/nix-ld.nix
     ./software/fcitx5.nix
-    ./software/docker.nix
+    ./software/podman.nix
     ./software/dev/python.nix
     ./software/dev/rust.nix
     ./software/dev/nodejs.nix

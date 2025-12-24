@@ -45,7 +45,6 @@
     obs-studio
     jetbrains.idea
     vscode
-    neovide
 
     vlc
     thunderbird
