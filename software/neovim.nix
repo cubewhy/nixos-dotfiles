@@ -39,12 +39,12 @@
   ];
 
   nixpkgs.overlays = [
-    inputs.neovim-nightly-overlay.overlays.default
+    # inputs.neovim-nightly-overlay.overlays.default
   ];
 
   programs.neovim = {
     enable = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    # package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
