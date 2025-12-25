@@ -24,6 +24,7 @@
     kdePackages.plasma-browser-integration
     kdePackages.sddm-kcm
     kdePackages.kdialog
+    kdePackages.filelight
   ];
 
   programs.gnupg.agent = {
