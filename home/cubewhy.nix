@@ -45,6 +45,8 @@
     vscode
     neovide
 
+    sqlx-cli
+
     vlc
     thunderbird
 
