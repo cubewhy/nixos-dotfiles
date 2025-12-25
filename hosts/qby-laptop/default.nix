@@ -12,6 +12,7 @@
     ../../software/wine.nix
     ../../software/kvm.nix
     ../../software/distrobox.nix
+    ../../software/ai/ollama.nix
 
     ../../hardware/nvidia.nix
     ../../hardware/amdgpu.nix
