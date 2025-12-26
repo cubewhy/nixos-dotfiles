@@ -40,11 +40,11 @@
 
   networking.hostName = "qby-laptop";
 
-  environment.variables = {
-    # GDK_SCALE = "2";
-    GDK_DPI_SCALE = "1";
-    _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
-  };
+  # environment.variables = {
+  #   # GDK_SCALE = "2";
+  #   GDK_DPI_SCALE = "1";
+  #   _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+  # };
 
   services.xserver = {
     dpi = 180;
