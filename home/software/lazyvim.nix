@@ -1,8 +1,9 @@
 # This script auto clones my lazyvim dotfiles into ~/.config/nvim
 # https://github.com/cubewhy/.lazyvim
-# Make sure you have nvim installed
+#
 # Notes:
-# You should always run `git pull` to update the LazyVim dotfiles manually.
+# 1. nix-ld configuration should be loaded to use LSP in nvim
+# 2. You should always run `git pull` to update the LazyVim dotfiles manually.
 # Call `git pull` inside .nix is not a good practice.
 {
   pkgs,
