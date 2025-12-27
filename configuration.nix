@@ -7,7 +7,6 @@
     ./software/fcitx5.nix
     ./software/podman.nix
     ./software/dev/python.nix
-    ./software/dev/rust.nix
     ./software/dev/nodejs.nix
 
     ./software/fonts/coding-fonts.nix
