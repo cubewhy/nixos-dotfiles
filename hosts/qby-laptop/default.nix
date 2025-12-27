@@ -40,6 +40,13 @@
     "amdgpu.runpm=0"
   ];
 
+  boot.extraModprobeConfig = ''
+    options rtw89_pci disable_aspm_l1=y disable_aspm_l1ss=y
+    options rtw89_core disable_ps_mode=y
+  '';
+
+  networking.networkmanager.wifi.powersave = false;
+
   networking.hostName = "qby-laptop";
 
   # environment.variables = {
