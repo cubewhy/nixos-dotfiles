@@ -34,6 +34,10 @@
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
 
+  nixpkgs.overlays = [
+    (import ./overlays/jetbrains.nix)
+  ];
+
   environment.systemPackages = with pkgs; [
     git
     wget
