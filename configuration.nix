@@ -21,10 +21,6 @@
     NIXOS_OZONE_WL = "1";
   };
 
-  environment.variables = {
-    LIBSQLITE = "${pkgs.sqlite.out}/lib/libsqlite3.so";
-  };
-
   nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;

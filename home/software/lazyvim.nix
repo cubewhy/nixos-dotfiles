@@ -37,10 +37,21 @@
     defaultEditor = true;
     withPython3 = true;
 
+    extraWrapperArgs = [
+      "--set"
+      "LIBSQLITE"
+      "${pkgs.sqlite.out}/lib/libsqlite3.so"
+    ];
+
     extraPackages = with pkgs; [
       # -- Dependencies for specific plugins --
       nodejs
       tree-sitter
+
+      # Uncomment these lines if you want to view images inside nvim
+      # imagemagick
+      # mermaid-cli
+      # tectonic
 
       # -- Build tools --
       gcc
