@@ -9,12 +9,19 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # https://github.com/nix-community/nix-index-database
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    nix-index-database,
     ...
   } @ inputs: {
     nixosConfigurations = {
@@ -26,6 +33,8 @@
         modules = [
           ./configuration.nix
           ./hosts/qby-laptop/default.nix
+
+          nix-index-database.nixosModules.default
 
           # Enable home-manager for my laptop
           home-manager.nixosModules.home-manager

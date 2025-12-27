@@ -26,11 +26,11 @@
   programs.zsh.enable = true;
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
+  programs.nix-index-database.comma.enable = true;
 
   nixpkgs.overlays = [
     (import ./overlays/jetbrains.nix)
   ];
-
   environment.systemPackages = with pkgs; [
     git
     wget
