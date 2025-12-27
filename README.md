@@ -48,3 +48,12 @@ sudo nixos-rebuild switch --flake .#<machine-name>
   ];
 };
 ```
+
+You may need to specific your kernel package inside your device specific
+configuration file, otherwise the LTS kernel will be used.
+
+[Linux Kernel at nixos.wiki](https://nixos.wiki/wiki/Linux_kernel)
+
+```nix
+boot.kernelPackages = pkgs.linuxPackages_<kernel_version>;
+```
