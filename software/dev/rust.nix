@@ -2,9 +2,8 @@
 # Use
 # nix flake init --template "https://flakehub.com/f/the-nix-way/dev-templates/*#rust"
 # instead
-# Notes:
-# I recommend you to add flake.nix into your project.
-# So we just only install rustup there.
+# If you want nightly or old versions, you may need rust-overlay
+# https://github.com/oxalica/rust-overlay
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     rustup
