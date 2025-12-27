@@ -46,6 +46,7 @@
     neovide
 
     sqlx-cli
+    dioxus-cli
 
     vlc
     thunderbird
