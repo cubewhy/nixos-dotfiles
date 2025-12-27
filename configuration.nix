@@ -2,7 +2,6 @@
   imports = [
     ./locale/zh-cn.nix
 
-    ./software/neovim.nix
     ./software/nix-ld.nix
     ./software/fcitx5.nix
     ./software/podman.nix
@@ -45,18 +44,19 @@
     psmisc
     htop-vim
 
-    gnumake
-    pkg-config
-    cmake
-    stdenv.cc.cc
-    stdenv.cc.cc.lib
-    buildPackages.stdenv.cc
-    glibc
+    neovim
 
-    unzip
+    # gnumake
+    # pkg-config
+    # cmake
+    # stdenv.cc.cc
+    # stdenv.cc.cc.lib
+    # buildPackages.stdenv.cc
+    # glibc
+
     pciutils
 
-    clang
+    uv
 
     ripgrep
     fd

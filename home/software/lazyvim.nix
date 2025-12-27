@@ -20,4 +20,41 @@
       ${pkgs.git}/bin/git clone "$REPO_URL" "$NVIM_CONFIG"
     fi
   '';
+
+  home.packages = with pkgs; [
+    git
+    wget
+    ripgrep
+    fd
+    wl-clipboard
+    lazygit
+  ];
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    defaultEditor = true;
+    withPython3 = true;
+
+    extraPackages = with pkgs; [
+      # -- Dependencies for specific plugins --
+      nodejs
+      tree-sitter
+
+      # -- Build tools --
+      gcc
+      go
+      rustc
+      cargo
+      gnumake
+      luarocks
+      unzip
+
+      (python3.withPackages (python-pkgs:
+        with python-pkgs; [
+          pysocks
+        ]))
+    ];
+  };
 }
