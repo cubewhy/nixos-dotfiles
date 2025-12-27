@@ -49,7 +49,7 @@ sniffer:
 tun:
   enable: true
   # system/gvisor/mixed
-  stack: gvisor
+  stack: system
   dns-hijack: ["any:53", "tcp://any:53"]
   device: nikki
   auto-route: true
