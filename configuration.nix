@@ -13,8 +13,6 @@
     ./software/fonts/coding-fonts.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;

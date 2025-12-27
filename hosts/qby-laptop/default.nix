@@ -21,6 +21,8 @@
     ../../hardware/remap-copilot.nix
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
   boot.loader = {
     systemd-boot = {
       consoleMode = "keep";
