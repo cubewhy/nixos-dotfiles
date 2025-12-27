@@ -42,13 +42,7 @@
 
     neovim
 
-    # gnumake
-    # pkg-config
-    # cmake
-    # stdenv.cc.cc
-    # stdenv.cc.cc.lib
-    # buildPackages.stdenv.cc
-    # glibc
+    libqalculate
 
     pciutils
 
