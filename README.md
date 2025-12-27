@@ -10,7 +10,7 @@ DO NOT USE THIS DIRECTLY ON YOUR MACHINE.
 git clone https://github.com/cubewhy/nixos-dotfiles ~/nixos-dotfiles
 cd ~/nixos-dotfiles
 nix flake update
-sudo nixos-rebuild switch --flake .#<machine-name>
+nixos-rebuild switch --flake .#<machine-name> --sudo
 ```
 
 ## Add your Machine
