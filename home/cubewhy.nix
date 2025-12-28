@@ -43,6 +43,7 @@
     obs-studio
     jetbrains.idea
     vscode
+    devenv
     neovide
 
     sqlx-cli
