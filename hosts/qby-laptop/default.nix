@@ -40,11 +40,6 @@
     "amdgpu.runpm=0"
   ];
 
-  boot.extraModprobeConfig = ''
-    options rtw89_pci disable_aspm_l1=y disable_aspm_l1ss=y
-    options rtw89_core disable_ps_mode=y
-  '';
-
   systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
 
