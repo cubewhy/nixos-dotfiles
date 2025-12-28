@@ -45,6 +45,7 @@
     options rtw89_core disable_ps_mode=y
   '';
 
+  systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
 
   networking.hostName = "qby-laptop";
