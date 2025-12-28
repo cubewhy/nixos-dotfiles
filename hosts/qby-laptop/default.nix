@@ -36,8 +36,8 @@
 
   boot.kernelParams = [
     "amdgpu.dcdebugmask=0x10"
-    "amdgpu.sg_display=0"
-    "amdgpu.runpm=0"
+    # "amdgpu.sg_display=0"
+    # "amdgpu.runpm=0"
   ];
 
   systemd.services.NetworkManager-wait-online.enable = false;
