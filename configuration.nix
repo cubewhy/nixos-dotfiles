@@ -35,6 +35,7 @@
     git
     wget
     dig
+    file
 
     net-tools
     psmisc
