@@ -25,6 +25,11 @@
     kdePackages.sddm-kcm
     kdePackages.kdialog
     kdePackages.filelight
+
+    # Ark dependencies
+    rar
+    p7zip
+    arj
   ];
 
   programs.gnupg.agent = {
