@@ -40,6 +40,12 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = ["mihomo"];
+    trustedInterfaces = ["nikki" "virbr0"];
+  };
+
+  networking.nat = {
+    enable = true;
+    internalInterfaces = ["virbr0"];
+    externalInterface = "nikki";
   };
 }
