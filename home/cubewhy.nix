@@ -51,7 +51,6 @@
 
     vlc
     thunderbird
-    ghidra
 
     krita
     kdePackages.kate

@@ -3,5 +3,12 @@
     (cutter.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
 
     (rizin.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
+
+    radare2
+    ghidra
+    ltrace
+    strace
+    hexdump
+    xxd
   ];
 }

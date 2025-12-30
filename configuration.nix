@@ -35,11 +35,8 @@
     git
     wget
     dig
+
     file
-    ltrace
-    strace
-    hexdump
-    xxd
 
     net-tools
     psmisc
