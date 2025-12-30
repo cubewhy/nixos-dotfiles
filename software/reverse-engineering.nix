@@ -7,6 +7,7 @@
     radare2
     ghidra
     ltrace
+    bintools
     strace
     hexdump
     xxd
