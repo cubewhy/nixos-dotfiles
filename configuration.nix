@@ -22,7 +22,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnsupportedSystem = true;
 
   programs.zsh.enable = true;
   programs.appimage.enable = true;
