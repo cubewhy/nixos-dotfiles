@@ -51,6 +51,7 @@
 
     vlc
     thunderbird
+    ghidra
 
     krita
     kdePackages.kate
@@ -59,7 +60,7 @@
     kdePackages.kcolorchooser
 
     kicad
-    cutter
+
     libreoffice-qt-fresh
     gimp-with-plugins
   ];
