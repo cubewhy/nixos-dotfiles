@@ -8,6 +8,7 @@
     ghidra
     ltrace
     bintools
+    checksec
     strace
     hexdump
     xxd
