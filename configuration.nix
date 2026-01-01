@@ -46,6 +46,7 @@
 
     libqalculate
 
+    smartmontools
     pciutils
 
     uv
