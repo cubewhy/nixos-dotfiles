@@ -54,6 +54,9 @@
       # mermaid-cli
       # tectonic
 
+      # LSP
+      nixd
+
       # -- Build tools --
       gcc
       go
