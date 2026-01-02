@@ -9,6 +9,10 @@
     options kvmfr static_size_mb=64
   '';
 
+  services.udev.extraRules = ''
+    SUBSYSTEM=="kvmfr", GROUP="kvm", MODE="0660"
+  '';
+
   virtualisation.libvirtd.qemu.verbatimConfig = ''
     cgroup_device_acl = [
         "/dev/null", "/dev/full", "/dev/zero",
