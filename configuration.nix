@@ -56,6 +56,7 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
+    inter
   ];
 
   fonts.fontconfig.useEmbeddedBitmaps = true;
