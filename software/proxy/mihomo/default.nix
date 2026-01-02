@@ -40,12 +40,15 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = ["nikki" "virbr0"];
+    trustedInterfaces = ["utun" "virbr0"];
+
+    allowedUDPPorts = [53 1053];
+    allowedTCPPorts = [53 1053];
   };
 
   networking.nat = {
     enable = true;
     internalInterfaces = ["virbr0"];
-    externalInterface = "nikki";
+    externalInterface = "utun";
   };
 }

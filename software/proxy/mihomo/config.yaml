@@ -51,7 +51,7 @@ tun:
   # system/gvisor/mixed
   stack: system
   dns-hijack: ["any:53", "tcp://any:53"]
-  device: nikki
+  device: utun
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
