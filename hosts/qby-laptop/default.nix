@@ -11,6 +11,7 @@
     ../../software/steam.nix
     ../../software/wine.nix
     ../../software/kvm.nix
+    ../../software/looking-glass.nix
     ../../software/distrobox.nix
     ../../software/reverse-engineering.nix
     ../../software/ai/ollama.nix
