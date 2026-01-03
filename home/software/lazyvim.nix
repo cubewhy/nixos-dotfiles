@@ -56,9 +56,47 @@
 
       # LSP
       nixd
+      clang-tools
+      lua-language-server
+      basedpyright
+      bash-language-server
+      vscode-langservers-extracted
+      docker-ls
+      docker-compose-language-service
+      yaml-language-server
+      vtsls
+      tailwindcss-language-server
+      taplo
+      ruff
+      eslint
+      ember-language-server
+      cmake-language-server
+      marksman
+
+      # Formatters
+      stylua
+      alejandra
+      prettier
+      shfmt
+
+      # Linters
+      cmake-lint
+      hadolint
+      shellcheck
+      markdownlint-cli2
+
+      # Debuggers
+      (vscode-extensions.vadimcn.vscode-lldb.overrideAttrs
+        (oldAttrs: {
+          buildInputs = [pkgs.python312Packages.six];
+        }))
+
+      # Language tools
+      markdown-toc
 
       # -- Build tools --
       gcc
+      clang
       go
       rustc
       cargo
@@ -69,6 +107,7 @@
       (python3.withPackages (python-pkgs:
         with python-pkgs; [
           pysocks
+          debugpy
         ]))
     ];
   };
