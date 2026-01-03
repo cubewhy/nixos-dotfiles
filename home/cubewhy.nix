@@ -88,6 +88,13 @@
 
   programs.git = {
     enable = true;
+    ignores = [
+      ".envrc"
+      ".direnv/"
+      ".DS_Store"
+      "node_modules/"
+      "*.swp"
+    ];
     signing = {
       key = "FA7C57A5D22986CC9FFF44ACB3D5C1917623163A";
       signByDefault = true;
