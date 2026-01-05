@@ -5,10 +5,10 @@ final: prev: {
     // {
       # --- IntelliJ IDEA Ultimate ---
       idea = prev.jetbrains.idea.overrideAttrs (old: rec {
-        version = "2025.2.6";
+        version = "2025.3.1";
         src = final.fetchurl {
           url = "https://download.jetbrains.com/idea/ideaIU-${version}.tar.gz";
-          sha256 = "sha256-fT2TZPY+mHNH+z+o+EXELDQ9FD3pVarMpl60Ff+Dw3Q=";
+          sha256 = "sha256-IeG5C17GhHZ6A0mLpCTvP5rMXb91nM7v1e3UdPBDrWw=";
         };
       });
     };
