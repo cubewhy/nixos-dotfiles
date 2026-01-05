@@ -30,7 +30,11 @@
     xorg.libXdamage
     xorg.libxshmfence
     xorg.libXxf86vm
+    libglvnd
     libelf
+
+    glfw
+    glfw3-minecraft
 
     glib
     gtk2
@@ -113,6 +117,7 @@
     alsa-lib
     expat
     libxkbcommon
+    wayland
 
     libxcrypt-legacy
     libGLU
@@ -120,6 +125,6 @@
     fuse
     e2fsprogs
 
-    (pkgs.runCommand "steamrun-lib" {} "mkdir $out; ln -s ${pkgs.steam-run.fhsenv}/usr/lib64 $out/lib")
+    # (pkgs.runCommand "steamrun-lib" {} "mkdir $out; ln -s ${pkgs.steam-run.fhsenv}/usr/lib64 $out/lib")
   ];
 }
