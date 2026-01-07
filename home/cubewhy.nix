@@ -44,7 +44,6 @@
     jetbrains.idea
     vscode
     devenv
-    neovide
 
     sqlx-cli
     dioxus-cli
