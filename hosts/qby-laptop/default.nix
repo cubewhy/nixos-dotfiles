@@ -54,7 +54,7 @@
   # };
 
   services.xserver = {
-    dpi = 180;
+    # dpi = 180;
   };
 
   hardware.nvidia = {
