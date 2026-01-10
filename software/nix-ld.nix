@@ -32,6 +32,7 @@
     xorg.libXxf86vm
     libglvnd
     libelf
+    libepoxy
 
     glfw
     glfw3-minecraft
