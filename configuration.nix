@@ -40,6 +40,7 @@
     net-tools
     psmisc
     htop-vim
+    ntfs3g
 
     neovim
 

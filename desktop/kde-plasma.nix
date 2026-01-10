@@ -20,6 +20,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    kdePackages.dolphin
+    kdePackages.dolphin-plugins
     kdePackages.kcharselect
     kdePackages.plasma-browser-integration
     kdePackages.sddm-kcm
