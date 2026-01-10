@@ -25,6 +25,7 @@
     kdePackages.sddm-kcm
     kdePackages.kdialog
     kdePackages.filelight
+    kdePackages.kfind
 
     # Ark dependencies
     rar
