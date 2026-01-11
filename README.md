@@ -26,7 +26,7 @@ nixos-rebuild switch --flake .#<machine-name> --sudo
 ```nix
 # Replace `<machine-name>` and `<username>` with your values
 <machine-name> = nixpkgs.lib.nixosSystem {
-  # Your CPU arch
+  # Your platform
   system = "x86_64-linux";
 
   specialArgs = { inherit inputs; };
@@ -36,15 +36,19 @@ nixos-rebuild switch --flake .#<machine-name> --sudo
     ./hosts/<machine-name>/default.nix
 
     # Remove this selection if you don't need home-manager
+    # -hm selection start-
     home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
 
       home-manager.users.<username> = import ./home/<username>.nix;
+      # you can add other users there using this pattern
+      # home-manager.users.<username> = import ./home/<username>.nix;
 
       home-manager.extraSpecialArgs = { inherit inputs; };
     }
+    # -hm selection end-
   ];
 };
 ```
