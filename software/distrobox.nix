@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  nixpkgs.overlays = [
+    (import ../overlays/distrobox.nix)
+  ];
+
   virtualisation.podman = {
     enable = true;
   };
