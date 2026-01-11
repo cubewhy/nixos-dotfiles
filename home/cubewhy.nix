@@ -48,7 +48,6 @@
     sqlx-cli
     dioxus-cli
 
-    vlc
     thunderbird
 
     krita

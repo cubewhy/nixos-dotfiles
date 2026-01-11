@@ -21,6 +21,8 @@
     ../../hardware/bluetooth.nix
     ../../hardware/apple-keyboard.nix
     ../../hardware/remap-copilot.nix
+
+    ../../software/vlc.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
@@ -53,9 +55,9 @@
   #   _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
   # };
 
-  services.xserver = {
-    # dpi = 180;
-  };
+  # services.xserver = {
+  # dpi = 180;
+  # };
 
   hardware.nvidia = {
     prime = {
