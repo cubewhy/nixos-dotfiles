@@ -40,24 +40,12 @@
 
   boot.kernelParams = [
     "amdgpu.dcdebugmask=0x10"
-    # "amdgpu.sg_display=0"
-    # "amdgpu.runpm=0"
   ];
 
   systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
 
   networking.hostName = "qby-laptop";
-
-  # environment.variables = {
-  #   # GDK_SCALE = "2";
-  #   GDK_DPI_SCALE = "1";
-  #   _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
-  # };
-
-  # services.xserver = {
-  # dpi = 180;
-  # };
 
   hardware.nvidia = {
     prime = {
