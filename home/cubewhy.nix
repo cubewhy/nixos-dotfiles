@@ -126,26 +126,14 @@
     EDITOR = "nvim";
   };
 
-  services.xsettingsd = {
-    enable = true;
-
-    settings = {
-      "Xft/DPI" = 196608;
-
-      "Xft/Antialias" = 1;
-      "Xft/Hinting" = 1;
-      "Xft/RGBA" = "rgb";
-      "Xft/HintStyle" = "hintslight";
-
-      "Net/ThemeName" = "Breeze";
-      "Net/IconThemeName" = "breeze";
-      "Gtk/CursorThemeName" = "breeze_cursors";
-
-      "Gdk/WindowScalingFactor" = 2;
-
-      "Gdk/UnscaledDPI" = 0;
-    };
-  };
+  # home.pointerCursor = {
+  #   gtk.enable = true;
+  #   x11.enable = true;
+  #   package = pkgs.kdePackages.breeze;
+  #   name = "breeze_cursors";
+  #
+  #   size = 48;
+  # };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
