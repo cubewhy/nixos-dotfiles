@@ -126,15 +126,6 @@
     EDITOR = "nvim";
   };
 
-  # home.pointerCursor = {
-  #   gtk.enable = true;
-  #   x11.enable = true;
-  #   package = pkgs.kdePackages.breeze;
-  #   name = "breeze_cursors";
-  #
-  #   size = 48;
-  # };
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
