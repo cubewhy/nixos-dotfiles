@@ -5,6 +5,8 @@
     ./software/nix-ld.nix
     ./software/fcitx5.nix
     ./software/podman.nix
+    ./software/direnv.nix
+    ./software/auto-gc.nix
     ./software/dev/python.nix
 
     ./software/fonts/coding-fonts.nix

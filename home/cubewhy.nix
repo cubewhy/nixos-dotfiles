@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./software/lazyvim.nix
-    ./software/direnv.nix
     ./software/rime.nix
   ];
 
