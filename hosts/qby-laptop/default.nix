@@ -38,6 +38,10 @@
     };
   };
 
+  environment.sessionVariables = {
+    _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2 -Dglass.gtk.uiScale=192dpi";
+  };
+
   boot.kernelParams = [
     "amdgpu.dcdebugmask=0x10"
   ];
