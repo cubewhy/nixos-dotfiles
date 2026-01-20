@@ -38,6 +38,8 @@
     };
   };
 
+  systemd.coredump.enable = false;
+
   environment.sessionVariables = {
     _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2 -Dglass.gtk.uiScale=192dpi";
   };
