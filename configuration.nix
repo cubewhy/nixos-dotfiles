@@ -33,6 +33,8 @@
     (import ./overlays/jetbrains.nix)
   ];
 
+  boot.supportedFilesystems = ["ntfs"];
+
   environment.systemPackages = with pkgs; [
     git
     wget
@@ -43,7 +45,6 @@
     net-tools
     psmisc
     htop-vim
-    ntfs3g
 
     neovim
 
