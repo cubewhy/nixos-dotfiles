@@ -36,6 +36,8 @@
     rar
     p7zip
     arj
+
+    kdePackages.ksshaskpass
   ];
 
   programs.gnupg.agent = {
@@ -44,6 +46,8 @@
 
   environment.sessionVariables = {
     PINENTRY_KDE_USE_WALLET = "1";
+    SSH_ASKPASS = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+    SSH_ASKPASS_REQUIRE = "prefer";
   };
 
   systemd.user.services.gpg-agent.environment = {
