@@ -51,6 +51,8 @@
   systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
 
+  programs.firejail.enable = true;
+
   networking.hostName = "qby-laptop";
 
   hardware.nvidia = {
