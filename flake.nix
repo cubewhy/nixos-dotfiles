@@ -15,6 +15,11 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -22,6 +27,7 @@
     nixpkgs,
     home-manager,
     nix-index-database,
+    sops-nix,
     ...
   } @ inputs: {
     nixosConfigurations = {
@@ -33,6 +39,7 @@
         modules = [
           ./configuration.nix
           ./hosts/qby-laptop/default.nix
+          sops-nix.nixosModules.sops
 
           nix-index-database.nixosModules.default
 

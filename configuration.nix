@@ -35,6 +35,16 @@
 
   boot.supportedFilesystems = ["ntfs"];
 
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    secrets.git_email_config = {
+      owner = "cubewhy";
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     git
     wget

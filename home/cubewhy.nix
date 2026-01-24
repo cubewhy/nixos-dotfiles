@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  osConfig,
+  pkgs,
+  ...
+}: {
   imports = [
     ./software/lazyvim.nix
     ./software/rime.nix
@@ -98,6 +102,15 @@
       format = "openpgp";
     };
     settings = {
+      include.path = osConfig.sops.secrets.git_email_config.path;
+
+      sendemail = {
+        smtpserver = "smtp.gmail.com";
+        smtpuser = "qby140326@gmail.com";
+        smtpserverport = 465;
+        smtpencryption = "ssl";
+      };
+
       user = {
         name = "cubewhy";
         email = "61075476+cubewhy@users.noreply.github.com";

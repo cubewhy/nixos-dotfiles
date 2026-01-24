@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../software/bootloader/systemd-boot.nix
@@ -8,7 +12,7 @@
 
     ../../software/proxy/mihomo/default.nix
     ../../software/wireshark.nix
-    ../../software/steam.nix
+    # ../../software/steam.nix
     ../../software/wine.nix
     ../../software/kvm.nix
     ../../software/looking-glass.nix
@@ -23,6 +27,8 @@
     ../../hardware/remap-copilot.nix
 
     ../../software/vlc.nix
+
+    ./dev-kernel.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
@@ -46,7 +52,18 @@
 
   boot.kernelParams = [
     "amdgpu.dcdebugmask=0x10"
+    "acpi_osi=\"Windows 2020\""
   ];
+
+  boot.blacklistedKernelModules = [
+    "redmi-wmi"
+  ];
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    acpi_call
+  ];
+
+  boot.kernelModules = ["acpi_call"];
 
   systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
