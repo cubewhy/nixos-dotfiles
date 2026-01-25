@@ -41,4 +41,11 @@
 in {
   boot.extraModulePackages = [tongfang-mifs-wmi];
   boot.kernelModules = ["tongfang-mifs-wmi"];
+
+  boot.kernelParams = [
+    "loglevel=8"
+  ];
+
+  # boot.kernel.sysctl."kernel.kexec_load_disabled" = 1;
+  boot.kernel.sysctl."kernel.printk" = "8 4 1 7";
 }
