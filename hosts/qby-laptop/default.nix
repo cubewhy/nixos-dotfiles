@@ -28,7 +28,8 @@
 
     ../../software/vlc.nix
 
-    ./dev-kernel.nix
+    # ./dev-kernel.nix
+    ./dev-kernel-mods.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
@@ -59,11 +60,11 @@
     "redmi-wmi"
   ];
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    acpi_call
-  ];
+  # boot.extraModulePackages = with config.boot.kernelPackages; [
+  #   acpi_call
+  # ];
 
-  boot.kernelModules = ["acpi_call"];
+  # boot.kernelModules = ["acpi_call"];
 
   systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
