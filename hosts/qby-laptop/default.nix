@@ -66,6 +66,8 @@
 
   # boot.kernelModules = ["acpi_call"];
 
+  boot.tmp.useTmpfs = true;
+
   systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
 
