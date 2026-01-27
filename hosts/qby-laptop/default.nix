@@ -53,7 +53,6 @@
 
   boot.kernelParams = [
     "amdgpu.dcdebugmask=0x10"
-    "acpi_osi=\"Windows 2020\""
   ];
 
   boot.blacklistedKernelModules = [
