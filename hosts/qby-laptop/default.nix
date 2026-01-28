@@ -47,6 +47,25 @@
 
   systemd.coredump.enable = false;
 
+  boot.kernel.sysctl = {
+    "kernel.core_pattern" = "/dev/null";
+  };
+
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "hard";
+      item = "core";
+      value = "0";
+    }
+    {
+      domain = "*";
+      type = "soft";
+      item = "core";
+      value = "0";
+    }
+  ];
+
   environment.sessionVariables = {
     _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2 -Dglass.gtk.uiScale=192dpi";
   };
