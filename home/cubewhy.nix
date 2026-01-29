@@ -97,7 +97,7 @@
       "*.swp"
     ];
     signing = {
-      key = "FA7C57A5D22986CC9FFF44ACB3D5C1917623163A";
+      key = "2CC84D387218DAAA23335B31ACC7D792BD6F8124";
       signByDefault = true;
       format = "openpgp";
     };
@@ -113,7 +113,7 @@
 
       user = {
         name = "cubewhy";
-        email = "61075476+cubewhy@users.noreply.github.com";
+        email = "qby140326@gmail.com";
       };
     };
   };
