@@ -71,6 +71,8 @@
   };
 
   boot.kernelParams = [
+    "amd_iommu=on"
+    "iommu=pt"
     "amdgpu.dcdebugmask=0x10"
   ];
 
