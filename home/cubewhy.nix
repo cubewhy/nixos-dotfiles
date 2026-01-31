@@ -6,6 +6,7 @@
   imports = [
     ./software/lazyvim.nix
     ./software/rime.nix
+    ./software/git-pagers.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
