@@ -12,7 +12,7 @@
 
     ../../software/proxy/mihomo/default.nix
     ../../software/wireshark.nix
-    # ../../software/steam.nix
+    ../../software/steam.nix
     ../../software/wine.nix
     ../../software/kvm.nix
     ../../software/looking-glass.nix
