@@ -91,7 +91,6 @@
   programs.git = {
     enable = true;
     ignores = [
-      ".envrc"
       ".direnv/"
       ".DS_Store"
       "node_modules/"
