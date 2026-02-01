@@ -116,6 +116,29 @@
     };
   };
 
+  programs.bash.enable = true;
+  programs.zsh = {
+    enable = true;
+
+    enableCompletion = true;
+
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = ["git"];
+      theme = "robbyrussell";
+    };
+
+    shellAliases = {
+      ll = "ls -l";
+    };
+
+    initExtra = ''
+    '';
+  };
+
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
@@ -134,6 +157,7 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    ANTHROPIC_BASE_URL = "http://127.0.0.1:8045/v1/messages";
   };
 
   # Let Home Manager install and manage itself.
