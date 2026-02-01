@@ -71,10 +71,28 @@
   };
 
   boot.kernelParams = [
+    "quiet"
+    "splash"
     "amd_iommu=on"
     "iommu=pt"
     "amdgpu.dcdebugmask=0x10"
   ];
+
+  boot.plymouth = {
+    enable = true;
+    themePackages = [
+      (pkgs.adi1090x-plymouth-themes.override {
+        selected_themes = ["deus_ex"];
+      })
+    ];
+    theme = "deus_ex";
+  };
+
+  boot.consoleLogLevel = 0;
+  boot.initrd.verbose = false;
+
+  boot.initrd.kernelModules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"];
+  boot.initrd.availableKernelModules = ["nvidia" "nvidia_modeset" "nvidia_drm"];
 
   boot.blacklistedKernelModules = [
     "redmi-wmi"
