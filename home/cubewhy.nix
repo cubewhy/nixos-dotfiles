@@ -157,7 +157,7 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
-    ANTHROPIC_BASE_URL = "http://127.0.0.1:8045/v1";
+    ANTHROPIC_BASE_URL = "http://127.0.0.1:8045";
     ANTHROPIC_AUTH_TOKEN = "sk-localhost";
   };
 
