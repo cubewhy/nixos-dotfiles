@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }: {
@@ -111,15 +112,24 @@
   networking.hostName = "qby-laptop";
 
   hardware.nvidia = {
+    powerManagement.enable = lib.mkForce false;
+    powerManagement.finegrained = lib.mkForce false;
     prime = {
-      reverseSync.enable = true;
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
+      sync.enable = true;
+      # reverseSync.enable = true;
+      # allowExternalGpu = false;
+
+      # offload = {
+      #   enable = true;
+      #   enableOffloadCmd = true;
+      # };
 
       nvidiaBusId = "PCI:01:00:0";
       amdgpuBusId = "PCI:06:00:0";
     };
+  };
+
+  environment.sessionVariables = {
+    KWIN_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card2";
   };
 }
