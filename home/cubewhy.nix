@@ -48,9 +48,7 @@
     jetbrains.idea
     vscode
     devenv
-
-    sqlx-cli
-    dioxus-cli
+    claude-code
 
     thunderbird
 
