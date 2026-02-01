@@ -91,9 +91,6 @@
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
 
-  boot.initrd.kernelModules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"];
-  boot.initrd.availableKernelModules = ["nvidia" "nvidia_modeset" "nvidia_drm"];
-
   boot.blacklistedKernelModules = [
     "redmi-wmi"
   ];
@@ -115,6 +112,7 @@
 
   hardware.nvidia = {
     prime = {
+      reverseSync.enable = true;
       offload = {
         enable = true;
         enableOffloadCmd = true;
