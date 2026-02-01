@@ -72,6 +72,7 @@
       ember-language-server
       cmake-language-server
       marksman
+      gopls
 
       # Formatters
       stylua
@@ -84,6 +85,7 @@
       hadolint
       shellcheck
       markdownlint-cli2
+      golangci-lint
 
       # Debuggers
       (vscode-extensions.vadimcn.vscode-lldb.overrideAttrs
@@ -93,6 +95,9 @@
 
       # Language tools
       markdown-toc
+      gotools
+      gofumpt
+      gomodifytags
 
       # -- Build tools --
       gcc
