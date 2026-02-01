@@ -31,6 +31,7 @@
 
   nixpkgs.overlays = [
     (import ./overlays/jetbrains.nix)
+    (import ./overlays/opencode.nix)
   ];
 
   boot.supportedFilesystems = ["ntfs"];
