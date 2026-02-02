@@ -7,6 +7,7 @@
     ./software/lazyvim.nix
     ./software/rime.nix
     ./software/git-pagers.nix
+    ./software/zsh.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -49,6 +50,7 @@
     vscode
     devenv
     claude-code
+    zoxide
 
     thunderbird
 
@@ -117,27 +119,6 @@
   };
 
   programs.bash.enable = true;
-  programs.zsh = {
-    enable = true;
-
-    enableCompletion = true;
-
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    oh-my-zsh = {
-      enable = true;
-      plugins = ["git"];
-      theme = "robbyrussell";
-    };
-
-    shellAliases = {
-      ll = "ls -l";
-    };
-
-    initExtra = ''
-    '';
-  };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
