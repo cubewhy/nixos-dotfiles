@@ -82,12 +82,6 @@
 
   boot.plymouth = {
     enable = true;
-    themePackages = [
-      (pkgs.adi1090x-plymouth-themes.override {
-        selected_themes = ["deus_ex"];
-      })
-    ];
-    theme = "deus_ex";
   };
 
   boot.consoleLogLevel = 0;
