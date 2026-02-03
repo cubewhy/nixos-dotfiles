@@ -20,9 +20,13 @@
   };
 
   environment.systemPackages = with pkgs; [
-    kdePackages.kio # needed since 25.11
-    kdePackages.kio-fuse #to mount remote filesystems via FUSE
-    kdePackages.kio-extras #extra protocols support (sftp, fish and more)
+    kdiff3
+    kdePackages.partitionmanager
+    kdePackages.kcolorchooser
+    kdePackages.kclock
+    kdePackages.kate
+    kdePackages.kcalc
+    kdePackages.ksystemlog
     kdePackages.dolphin
     kdePackages.dolphin-plugins
     kdePackages.kcharselect
@@ -38,6 +42,10 @@
     arj
 
     kdePackages.ksshaskpass
+  ];
+
+  environment.plasma6.excludePackages = with pkgs; [
+    kdePackages.discover
   ];
 
   programs.gnupg.agent = {
