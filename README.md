@@ -16,6 +16,12 @@ nixos-rebuild switch --flake .#<machine-name> --sudo
 If you want to add your modifications to this repo, it's recommended to delete
 the git root and add your own or create a fork on GitHub.
 
+Alternatively, if you are prefer [nh](https://github.com/nix-community/nh):
+
+```shell
+nh os switch . --hostname qby-laptop
+```
+
 ## Add your Machine
 
 - Create new `<machine-name>/default.nix` file in the `hosts/` folder

@@ -78,6 +78,9 @@
   fonts.fontconfig.useEmbeddedBitmaps = true;
 
   programs.mtr.enable = true;
+  programs.nh = {
+    enable = true;
+  };
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
