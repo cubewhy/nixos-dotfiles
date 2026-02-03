@@ -1,7 +1,8 @@
 # https://github.com/linyinfeng/angrr
-{...}: {
+{pkgs-unstable, ...}: {
   services.angrr = {
     enable = true;
+    package = pkgs-unstable.angrr;
     settings = {
       temporary-root-policies = {
         direnv = {

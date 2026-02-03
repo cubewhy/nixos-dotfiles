@@ -2,6 +2,6 @@
 # to get the workaround for Windows dependencies.
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    wineWowPackages.stable
+    wineWowPackages.stableFull
   ];
 }

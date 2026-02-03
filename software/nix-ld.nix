@@ -78,7 +78,7 @@
     libvorbis
     SDL
     SDL2_image
-    glew_1_10
+    glew
     libidn
     tbb
 
