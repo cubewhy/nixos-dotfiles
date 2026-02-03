@@ -56,10 +56,8 @@
     thunderbird
 
     krita
-    kdePackages.kate
     kdePackages.kdenlive
     kdePackages.ktorrent
-    kdePackages.kcolorchooser
 
     kicad
 
