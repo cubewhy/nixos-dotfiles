@@ -107,17 +107,17 @@
   networking.hostName = "qby-laptop";
 
   hardware.nvidia = {
-    powerManagement.enable = lib.mkForce false;
-    powerManagement.finegrained = lib.mkForce false;
+    # powerManagement.enable = lib.mkForce false;
+    # powerManagement.finegrained = lib.mkForce false;
     prime = {
-      sync.enable = true;
+      # sync.enable = true;
       # reverseSync.enable = true;
       # allowExternalGpu = false;
 
-      # offload = {
-      #   enable = true;
-      #   enableOffloadCmd = true;
-      # };
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
 
       nvidiaBusId = "PCI:01:00:0";
       amdgpuBusId = "PCI:06:00:0";
