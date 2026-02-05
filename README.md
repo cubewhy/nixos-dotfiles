@@ -70,3 +70,9 @@ configuration file, otherwise the LTS kernel will be used.
 ```nix
 boot.kernelPackages = pkgs.linuxPackages_<kernel_version>;
 ```
+
+## License
+
+The dotfiles are licensed under [MIT](LICENSE).
+
+Patches under the `patches/` folder are licensed under [GPLv2](LICENSE-GPLv2).
