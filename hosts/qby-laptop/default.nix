@@ -91,6 +91,13 @@
     "redmi-wmi"
   ];
 
+  boot.kernelPatches = [
+    {
+      name = "rpl-dmic-support";
+      patch = ../../patches/rpl-add-dmic-support.patch;
+    }
+  ];
+
   # boot.extraModulePackages = with config.boot.kernelPackages; [
   #   acpi_call
   # ];
