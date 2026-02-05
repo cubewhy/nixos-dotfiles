@@ -13,7 +13,7 @@
       pname = "tongfang-mifs-wmi";
       version = "local";
 
-      src = /home/cubewhy/dev/projects/tongfang-mifs-wmi;
+      src = ../../patches/tongfang-mifs-wmi;
 
       nativeBuildInputs = kernel.moduleBuildDependencies;
 
