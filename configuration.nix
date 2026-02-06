@@ -10,6 +10,7 @@
     ./software/dev/python.nix
 
     ./software/fonts/coding-fonts.nix
+    ./software/ccache.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
