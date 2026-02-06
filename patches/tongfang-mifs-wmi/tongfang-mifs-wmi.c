@@ -1,5 +1,6 @@
-
 // SPDX-License-Identifier: GPL-2.0-or-later
+#include "asm-generic/errno.h"
+#include "linux/notifier.h"
 #include <linux/acpi.h>
 #include <linux/bits.h>
 #include <linux/cleanup.h>
@@ -127,11 +128,26 @@ struct tongfang_mifs_event {
   u8 reserved[4];
 } __packed;
 
+static ATOMIC_NOTIFIER_HEAD(tongfang_notifier_list);
+
+enum tongfang_notifier_actions {
+  TONGFANG_NOTIFY_KBD_BRIGHTNESS,
+  TONGFANG_NOTIFY_PLATFORM_PROFILE,
+  TONGFANG_NOTIFY_HWMON,
+};
+
+struct tongfang_fan_notify_data {
+  int channel; /* 0 = CPU, 1 = GPU */
+  u16 speed;
+};
+
 struct tongfang_mifs_wmi_data {
   struct wmi_device *wdev;
   struct mutex lock; /* Protects WMI calls */
   struct led_classdev kbd_led;
+  struct notifier_block notifier;
   struct input_dev *input_dev;
+  struct device *hwmon_dev;
   enum platform_profile_option saved_profile;
 };
 
@@ -182,22 +198,6 @@ out:
   return ret;
 }
 
-static bool is_ac_online(void) {
-  struct power_supply *psy;
-  union power_supply_propval val;
-  bool online = false;
-
-  psy = power_supply_get_by_name("ADP1");
-  if (!psy)
-    return false;
-
-  if (!power_supply_get_property(psy, POWER_SUPPLY_PROP_ONLINE, &val))
-    online = (val.intval == 1);
-
-  power_supply_put(psy);
-  return online;
-}
-
 static int laptop_profile_get(struct device *dev,
                               enum platform_profile_option *profile) {
   struct tongfang_mifs_wmi_data *data = dev_get_drvdata(dev);
@@ -211,7 +211,6 @@ static int laptop_profile_get(struct device *dev,
   int ret;
 
   ret = tongfang_mifs_wmi_call(data, &input, &result);
-
   if (ret)
     return ret;
 
@@ -234,6 +233,29 @@ static int laptop_profile_get(struct device *dev,
   return 0;
 }
 
+static int
+tongfang_check_performance_capability(struct tongfang_mifs_wmi_data *data) {
+  struct tongfang_mifs_input input = {
+      .operation = WMI_METHOD_GET,
+      .function = WMI_FN_SYSTEM_AC_TYPE,
+  };
+  struct tongfang_mifs_output output;
+  int ret;
+
+  /* Full-speed/performance mode requires DC power (not USB-C) */
+  if (!power_supply_is_system_supplied())
+    return -EOPNOTSUPP;
+
+  ret = tongfang_mifs_wmi_call(data, &input, &output);
+  if (ret)
+    return ret;
+
+  if (output.data[0] == WMI_SYSTEM_AC_TYPEC)
+    return -EOPNOTSUPP;
+
+  return 0;
+}
+
 static int laptop_profile_set(struct device *dev,
                               enum platform_profile_option profile) {
   struct tongfang_mifs_wmi_data *data = dev_get_drvdata(dev);
@@ -243,7 +265,6 @@ static int laptop_profile_set(struct device *dev,
       .reserved2 = 0,
       .function = WMI_FN_SYSTEM_PER_MODE,
   };
-  struct tongfang_mifs_output ac_type_res;
   int ret;
   u8 val;
 
@@ -255,27 +276,16 @@ static int laptop_profile_set(struct device *dev,
     val = WMI_PP_BALANCED;
     break;
   case PLATFORM_PROFILE_BALANCED_PERFORMANCE:
-    val = WMI_PP_PERFORMANCE;
-    fallthrough;
-  case PLATFORM_PROFILE_PERFORMANCE:
-    /* Check if Typec power is not connected for
-     * full-speed/performance mode */
-    input.operation = WMI_METHOD_GET;
-    input.function = WMI_FN_SYSTEM_AC_TYPE;
-    ret = tongfang_mifs_wmi_call(data, &input, &ac_type_res);
+    ret = tongfang_check_performance_capability(data);
     if (ret)
       return ret;
-
-    /* Full-speed/performance mode requires DC power (not USB-C) */
-    if (ac_type_res.data[0] == WMI_SYSTEM_AC_TYPEC || !is_ac_online())
-      return -EOPNOTSUPP;
-
-    if (!val)
-      val = WMI_PP_FULL_SPEED;
-
-    /* Restore operation and function for the actual SET call */
-    input.operation = WMI_METHOD_SET;
-    input.function = WMI_FN_SYSTEM_PER_MODE;
+    val = WMI_PP_PERFORMANCE;
+    break;
+  case PLATFORM_PROFILE_PERFORMANCE:
+    ret = tongfang_check_performance_capability(data);
+    if (ret)
+      return ret;
+    val = WMI_PP_FULL_SPEED;
     break;
   default:
     return -EOPNOTSUPP;
@@ -304,18 +314,14 @@ static int tongfang_mifs_wmi_suspend(struct device *dev) {
   if (ret == 0)
     data->saved_profile = profile;
 
-  return 0;
+  return ret;
 }
 
 static int tongfang_mifs_wmi_resume(struct device *dev) {
   struct tongfang_mifs_wmi_data *data = dev_get_drvdata(dev);
 
-  if (data->saved_profile != PLATFORM_PROFILE_LAST) {
-    dev_dbg(dev, "Resuming, restoring profile %d\n", data->saved_profile);
-    return laptop_profile_set(dev, data->saved_profile);
-  }
-
-  return 0;
+  dev_dbg(dev, "Resuming, restoring profile %d\n", data->saved_profile);
+  return laptop_profile_set(dev, data->saved_profile);
 }
 
 static DEFINE_SIMPLE_DEV_PM_OPS(tongfang_mifs_wmi_pm_ops,
@@ -350,8 +356,8 @@ static int laptop_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
     input.function = WMI_FN_CPU_THERMOMETER;
     ret = tongfang_mifs_wmi_call(data, &input, &res);
     if (!ret)
-      *val = res.data[0] * MILLI;
-    break;
+      *val = res.data[0] * MILLIDEGREE_PER_DEGREE;
+    return ret;
   case hwmon_fan:
     input.function = WMI_FN_FAN_SPEEDS;
     ret = tongfang_mifs_wmi_call(data, &input, &res);
@@ -473,7 +479,7 @@ static ssize_t gpu_mode_show(struct device *dev, struct device_attribute *attr,
   mode_val = res.data[0];
 
   if (mode_val >= ARRAY_SIZE(gpu_mode_strings))
-    return sysfs_emit(buf, "%d\n", mode_val);
+    return -EPROTO;
 
   return sysfs_emit(buf, "%s\n", gpu_mode_strings[mode_val]);
 }
@@ -497,7 +503,6 @@ static ssize_t gpu_mode_store(struct device *dev, struct device_attribute *attr,
   input.payload[0] = (u8)val;
 
   ret = tongfang_mifs_wmi_call(data, &input, NULL);
-
   if (ret)
     return ret;
 
@@ -523,7 +528,6 @@ static ssize_t kb_mode_show(struct device *dev, struct device_attribute *attr,
   struct tongfang_mifs_output res;
   int ret;
   u8 mode_val;
-  const char *mode_str;
 
   ret = tongfang_mifs_wmi_call(data, &input, &res);
   if (ret)
@@ -531,14 +535,10 @@ static ssize_t kb_mode_show(struct device *dev, struct device_attribute *attr,
 
   mode_val = res.data[0];
 
-  if (mode_val < ARRAY_SIZE(kb_mode_strings)) {
-    mode_str = kb_mode_strings[mode_val];
-  } else {
-    // Fallback for an unexpected/unknown mode
-    return sysfs_emit(buf, "%d\n", mode_val);
-  }
+  if (mode_val >= ARRAY_SIZE(kb_mode_strings))
+    return -EPROTO;
 
-  return sysfs_emit(buf, "%s\n", mode_str);
+  return sysfs_emit(buf, "%s\n", kb_mode_strings[mode_val]);
 }
 
 static ssize_t kb_mode_store(struct device *dev, struct device_attribute *attr,
@@ -581,7 +581,6 @@ static ssize_t fan_boost_store(struct device *dev,
       .reserved2 = 0,
       .function = WMI_FN_MAX_FAN_SWITCH,
   };
-  u8 payload[2];
   bool val;
   int ret;
 
@@ -591,10 +590,8 @@ static ssize_t fan_boost_store(struct device *dev,
   if (kstrtobool(buf, &val))
     return -EINVAL;
 
-  payload[0] = 0; /* CPU/GPU Fan */
-  payload[1] = val;
-
-  memcpy(input.payload, payload, sizeof(payload));
+  input.payload[0] = 0; /* CPU/GPU Fan */
+  input.payload[1] = val;
 
   ret = tongfang_mifs_wmi_call(data, &input, NULL);
   if (ret)
@@ -603,35 +600,14 @@ static ssize_t fan_boost_store(struct device *dev,
   return count;
 }
 
-static ssize_t profile_persist_show(struct device *dev,
-                                    struct device_attribute *attr, char *buf) {
-  enum platform_profile_option profile;
-  int ret;
-
-  ret = laptop_profile_get(dev, &profile);
-  if (ret)
-    return ret;
-
-  return sysfs_emit(buf, "%d\n", profile);
-}
-
-static ssize_t profile_persist_store(struct device *dev,
-                                     struct device_attribute *attr,
-                                     const char *buf, size_t count) {
-  kobject_uevent(&dev->kobj, KOBJ_CHANGE);
-  return count;
-}
-
 static DEVICE_ATTR_RW(gpu_mode);
 static DEVICE_ATTR_RW(kb_mode);
 static DEVICE_ATTR_WO(fan_boost);
-static DEVICE_ATTR_RW(profile_persist);
 
 static struct attribute *laptop_attrs[] = {
     &dev_attr_gpu_mode.attr,
     &dev_attr_kb_mode.attr,
     &dev_attr_fan_boost.attr,
-    &dev_attr_profile_persist.attr,
     NULL,
 };
 ATTRIBUTE_GROUPS(laptop);
@@ -650,11 +626,38 @@ static const struct key_entry tongfang_mifs_wmi_keymap[] = {
     {KE_IGNORE, WMI_EVENT_FN_5, {KEY_RESERVED}},
     {KE_END, 0}};
 
+static int tongfang_notifier_callback(struct notifier_block *nb,
+                                      unsigned long action, void *data) {
+  struct tongfang_mifs_wmi_data *data_ctx =
+      container_of(nb, struct tongfang_mifs_wmi_data, notifier);
+  struct tongfang_fan_notify_data *fan_info;
+  u8 *brightness;
+
+  switch (action) {
+  case TONGFANG_NOTIFY_KBD_BRIGHTNESS:
+    brightness = data;
+    led_classdev_notify_brightness_hw_changed(&data_ctx->kbd_led, *brightness);
+    break;
+  case TONGFANG_NOTIFY_PLATFORM_PROFILE:
+    platform_profile_notify(&data_ctx->wdev->dev);
+    break;
+  case TONGFANG_NOTIFY_HWMON:
+    fan_info = data;
+    if (!fan_info)
+      return NOTIFY_DONE;
+
+    hwmon_notify_event(data_ctx->hwmon_dev, hwmon_fan, hwmon_fan_input,
+                       fan_info->channel);
+    break;
+  }
+
+  return NOTIFY_OK;
+}
+
 static int tongfang_mifs_wmi_probe(struct wmi_device *wdev,
                                    const void *context) {
   struct tongfang_mifs_wmi_data *drv_data;
   struct device *pp_dev;
-  struct device *hwmon_dev;
   enum tongfang_wmi_device_type dev_type =
       (enum tongfang_wmi_device_type)(unsigned long)context;
   int ret;
@@ -667,7 +670,6 @@ static int tongfang_mifs_wmi_probe(struct wmi_device *wdev,
 
   ret = devm_mutex_init(&wdev->dev, &drv_data->lock);
   if (ret) {
-    dev_err(&wdev->dev, "failed to initialize WMI data lock: %d\n", ret);
     return ret;
   }
 
@@ -687,17 +689,13 @@ static int tongfang_mifs_wmi_probe(struct wmi_device *wdev,
     ret = sparse_keymap_setup(drv_data->input_dev, tongfang_mifs_wmi_keymap,
                               NULL);
     if (ret) {
-      dev_err(&wdev->dev, "Failed to setup sparse keymap\n");
       return ret;
     }
 
     ret = input_register_device(drv_data->input_dev);
     if (ret) {
-      dev_err(&wdev->dev, "Failed to register input device\n");
       return ret;
     }
-
-    dev_info(&wdev->dev, "Registered WMI event device\n");
 
     return 0;
   }
@@ -706,18 +704,16 @@ static int tongfang_mifs_wmi_probe(struct wmi_device *wdev,
   pp_dev = devm_platform_profile_register(&wdev->dev, DRV_NAME, drv_data,
                                           &laptop_profile_ops);
   if (IS_ERR(pp_dev)) {
-    dev_err(&wdev->dev, "Failed to register platform profile\n");
     return PTR_ERR(pp_dev);
   }
 
   drv_data->saved_profile = PLATFORM_PROFILE_LAST;
 
   /* Register hwmon */
-  hwmon_dev = devm_hwmon_device_register_with_info(
+  drv_data->hwmon_dev = devm_hwmon_device_register_with_info(
       &wdev->dev, "tongfang_mifs", drv_data, &laptop_chip_info, NULL);
-  if (IS_ERR(hwmon_dev)) {
-    dev_err(&wdev->dev, "Failed to register hwmon\n");
-    return PTR_ERR(hwmon_dev);
+  if (IS_ERR(drv_data->hwmon_dev)) {
+    return PTR_ERR(drv_data->hwmon_dev);
   }
 
   /* Register keyboard LED */
@@ -727,27 +723,41 @@ static int tongfang_mifs_wmi_probe(struct wmi_device *wdev,
   drv_data->kbd_led.brightness_set_blocking = laptop_kbd_led_set;
   drv_data->kbd_led.brightness_get = laptop_kbd_led_get;
   ret = devm_led_classdev_register(&wdev->dev, &drv_data->kbd_led);
-  if (ret) {
-    dev_err(&wdev->dev, "Failed to register keyboard LED\n");
+  if (ret)
     return ret;
-  }
+
+  drv_data->notifier.notifier_call = tongfang_notifier_callback;
+  ret = atomic_notifier_chain_register(&tongfang_notifier_list,
+                                       &drv_data->notifier);
+  if (ret)
+    return ret;
 
   return 0;
 }
 
+static void tongfang_mifs_wmi_remove(struct wmi_device *wdev) {
+  struct tongfang_mifs_wmi_data *drv_data;
+
+  drv_data = devm_kzalloc(&wdev->dev, sizeof(*drv_data), GFP_KERNEL);
+  if (!drv_data)
+    return;
+
+  atomic_notifier_chain_unregister(&tongfang_notifier_list,
+                                   &drv_data->notifier);
+}
+
 static void tongfang_mifs_wmi_notify(struct wmi_device *wdev,
-                                     union acpi_object *obj) {
+                                     const struct wmi_buffer *buffer) {
   struct tongfang_mifs_wmi_data *data = dev_get_drvdata(&wdev->dev);
   const struct tongfang_mifs_event *event;
+  struct tongfang_fan_notify_data fan_data;
   u16 fan_speed;
+  u8 brightness;
 
-  if (!obj || obj->type != ACPI_TYPE_BUFFER)
+  if (buffer->length < sizeof(*event))
     return;
 
-  if (obj->buffer.length < sizeof(*event))
-    return;
-
-  event = (const struct tongfang_mifs_event *)obj->buffer.pointer;
+  event = (const struct tongfang_mifs_event *)buffer->data;
 
   /* Validate event type */
   if (event->event_type != WMI_EVENT_TYPE_HOTKEY)
@@ -759,11 +769,14 @@ static void tongfang_mifs_wmi_notify(struct wmi_device *wdev,
 
   switch (event->event_id) {
   case WMI_EVENT_KBD_BRIGHTNESS:
-    led_classdev_notify_brightness_hw_changed(&data->kbd_led, event->value_low);
+    brightness = event->value_low;
+    atomic_notifier_call_chain(&tongfang_notifier_list,
+                               TONGFANG_NOTIFY_KBD_BRIGHTNESS, &brightness);
     break;
 
   case WMI_EVENT_PERFORMANCE_PLAN:
-    platform_profile_notify(&wdev->dev);
+    atomic_notifier_call_chain(&tongfang_notifier_list,
+                               TONGFANG_NOTIFY_PLATFORM_PROFILE, NULL);
     break;
 
   case WMI_EVENT_OPEN_APP:
@@ -773,13 +786,21 @@ static void tongfang_mifs_wmi_notify(struct wmi_device *wdev,
       dev_warn(&wdev->dev, "Unknown key pressed: 0x%02x\n", event->event_id);
     break;
 
+  /*
+   * The device has 3 fans (CPU, GPU, SYS),
+   * but there are only the CPU and GPU fan has events
+   * */
   case WMI_EVENT_CPU_FAN_SPEED:
   case WMI_EVENT_GPU_FAN_SPEED:
+    if (event->event_id == WMI_EVENT_CPU_FAN_SPEED)
+      fan_data.channel = 0;
+    else
+      fan_data.channel = 1;
+
     /* Fan speed is 16-bit value (value_low is LSB, value_high is MSB) */
-    fan_speed = (event->value_high << 8) | event->value_low;
-    dev_dbg(&wdev->dev, "Fan speed event: id=%d speed=%u RPM\n",
-            event->event_id, fan_speed);
-    /* These are informational, hwmon polling will read the actual values */
+    fan_data.speed = (event->value_high << 8) | event->value_low;
+    atomic_notifier_call_chain(&tongfang_notifier_list, TONGFANG_NOTIFY_HWMON,
+                               &fan_data);
     break;
 
   case WMI_EVENT_AIRPLANE_MODE:
@@ -819,7 +840,8 @@ static struct wmi_driver tongfang_mifs_wmi_driver = {
         },
     .id_table = tongfang_mifs_wmi_id_table,
     .probe = tongfang_mifs_wmi_probe,
-    .notify = tongfang_mifs_wmi_notify,
+    .remove = tongfang_mifs_wmi_remove,
+    .notify_new = tongfang_mifs_wmi_notify,
 };
 
 module_wmi_driver(tongfang_mifs_wmi_driver);
