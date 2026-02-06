@@ -54,6 +54,10 @@
     "kernel.core_pattern" = "/dev/null";
   };
 
+  programs.nh = {
+    flake = "/home/cubewhy/nixos-config";
+  };
+
   security.pam.loginLimits = [
     {
       domain = "*";

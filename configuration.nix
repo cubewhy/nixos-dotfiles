@@ -6,7 +6,7 @@
     ./software/fcitx5.nix
     ./software/podman.nix
     ./software/direnv.nix
-    ./software/auto-gc.nix
+    # ./software/auto-gc.nix
     ./software/dev/python.nix
 
     ./software/fonts/coding-fonts.nix
@@ -81,6 +81,8 @@
   programs.mtr.enable = true;
   programs.nh = {
     enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
   };
   services.pcscd.enable = true;
   programs.gnupg.agent = {
