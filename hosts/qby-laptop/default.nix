@@ -29,6 +29,7 @@
     ../../hardware/remap-copilot.nix
 
     ../../software/vlc.nix
+    ../../software/dev/esp32-dev.nix
 
     # ./dev-kernel.nix
     ./dev-kernel-mods.nix
