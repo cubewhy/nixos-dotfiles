@@ -52,6 +52,7 @@
     pkgs-unstable.devenv
     claude-code
     zoxide
+    cotp
 
     thunderbird
 
