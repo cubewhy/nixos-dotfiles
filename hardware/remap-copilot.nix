@@ -19,4 +19,14 @@
       };
     };
   };
+
+  systemd.services.keyd.serviceConfig = {
+    CPUSchedulingPolicy = "fifo";
+    CPUSchedulingPriority = 50;
+
+    Nice = -20;
+
+    MemorySwapMax = "0";
+    OOMScoreAdjust = -1000;
+  };
 }
