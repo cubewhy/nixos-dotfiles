@@ -1,6 +1,6 @@
 {...}: {
   services.open-webui = {
-    enable = false;
+    enable = true;
     port = 40080;
   };
 }

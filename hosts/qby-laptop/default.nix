@@ -21,6 +21,7 @@
     ../../software/distrobox.nix
     ../../software/reverse-engineering.nix
     ../../software/ai/ollama.nix
+    ../../software/ai/open-webui.nix
 
     ../../hardware/nvidia.nix
     ../../hardware/amdgpu.nix
