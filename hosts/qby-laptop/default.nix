@@ -90,6 +90,7 @@
     "amd_iommu=on"
     "iommu=pt"
     "amdgpu.dcdebugmask=0x10"
+    "nvidia.NVreg_DynamicPowerManagement=0x00"
   ];
 
   boot.plymouth = {
@@ -126,17 +127,16 @@
   networking.hostName = "qby-laptop";
 
   hardware.nvidia = {
-    # powerManagement.enable = lib.mkForce false;
     powerManagement.finegrained = lib.mkForce false;
     prime = {
-      # sync.enable = true;
+      sync.enable = true;
       # reverseSync.enable = true;
       # allowExternalGpu = false;
 
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
+      # offload = {
+      #   enable = true;
+      #   enableOffloadCmd = true;
+      # };
 
       nvidiaBusId = "PCI:01:00:0";
       amdgpuBusId = "PCI:06:00:0";
