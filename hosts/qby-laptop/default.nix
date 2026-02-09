@@ -127,7 +127,7 @@
 
   hardware.nvidia = {
     # powerManagement.enable = lib.mkForce false;
-    # powerManagement.finegrained = lib.mkForce false;
+    powerManagement.finegrained = lib.mkForce false;
     prime = {
       # sync.enable = true;
       # reverseSync.enable = true;
