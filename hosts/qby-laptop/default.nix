@@ -77,7 +77,12 @@
 
   environment.sessionVariables = {
     _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2 -Dglass.gtk.uiScale=192dpi";
+    KWIN_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card2";
   };
+
+  environment.systemPackages = with pkgs; [
+    easyeffects
+  ];
 
   boot.kernelParams = [
     "quiet"
@@ -136,9 +141,5 @@
       nvidiaBusId = "PCI:01:00:0";
       amdgpuBusId = "PCI:06:00:0";
     };
-  };
-
-  environment.sessionVariables = {
-    KWIN_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card2";
   };
 }
