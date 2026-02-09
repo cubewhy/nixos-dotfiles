@@ -42,7 +42,6 @@
     # '')
 
     prismlauncher
-    kitty
     ayugram-desktop
     fastfetch
     librewolf
@@ -118,6 +117,23 @@
   };
 
   programs.bash.enable = true;
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      font = {
+        size = 12.0;
+        normal = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Regular";
+        };
+        bold = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Bold";
+        };
+      };
+    };
+  };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
