@@ -22,7 +22,7 @@
   };
 
   fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/1b192ca5-4c55-4956-a603-b0b13b9085dc";
+    device = "/dev/disk/by-uuid/66c240f9-ee0b-43a1-accd-71f66622fd87";
     fsType = "btrfs";
     options = [
       "users" # Allows any user to mount and unmount
