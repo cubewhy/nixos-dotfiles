@@ -118,20 +118,29 @@
 
   programs.bash.enable = true;
 
-  programs.alacritty = {
+  # programs.alacritty = {
+  #   enable = true;
+  #   settings = {
+  #     font = {
+  #       size = 12.0;
+  #       normal = {
+  #         family = "JetBrainsMono Nerd Font";
+  #         style = "Regular";
+  #       };
+  #       bold = {
+  #         family = "JetBrainsMono Nerd Font";
+  #         style = "Bold";
+  #       };
+  #     };
+  #   };
+  # };
+
+  programs.kitty = {
     enable = true;
     settings = {
-      font = {
-        size = 12.0;
-        normal = {
-          family = "JetBrainsMono Nerd Font";
-          style = "Regular";
-        };
-        bold = {
-          family = "JetBrainsMono Nerd Font";
-          style = "Bold";
-        };
-      };
+      repaint_delay = 2;
+      input_delay = 0;
+      sync_to_monitor = "no";
     };
   };
 

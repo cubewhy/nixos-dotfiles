@@ -24,6 +24,12 @@
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/1b192ca5-4c55-4956-a603-b0b13b9085dc";
     fsType = "btrfs";
+    options = [
+      "users" # Allows any user to mount and unmount
+      "nofail" # Prevent system from failing if this drive doesn't mount
+      "exec" # Permit execution of binaries and other executable files
+      "x-gvfs-show"
+    ];
   };
 
   fileSystems."/boot" = {
@@ -31,6 +37,10 @@
     fsType = "vfat";
     options = ["fmask=0077" "dmask=0077"];
   };
+
+  systemd.tmpfiles.rules = [
+    "d /mnt/data 0777 root root -"
+  ];
 
   swapDevices = [
     {device = "/dev/disk/by-uuid/74362763-fb0a-475c-a11e-8a292bcb51f7";}
