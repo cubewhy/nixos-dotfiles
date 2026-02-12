@@ -1,3 +1,34 @@
+diff --git a/sound/soc/amd/Kconfig b/sound/soc/amd/Kconfig
+index fd35a03aadcb..a6eecbe12e84 100644
+--- a/sound/soc/amd/Kconfig
++++ b/sound/soc/amd/Kconfig
+@@ -124,16 +124,6 @@ config SND_AMD_ACP_CONFIG
+ 
+ source "sound/soc/amd/acp/Kconfig"
+ 
+-config SND_SOC_AMD_RPL_ACP6x
+-        tristate "AMD Audio Coprocessor-v6.2 RPL support"
+-        depends on X86 && PCI
+-        help
+-          This option enables Audio Coprocessor i.e. ACP v6.2 support on
+-          AMD RPL platform. By enabling this flag build will be
+-          triggered for ACP PCI driver.
+-          Say m if you have such a device.
+-          If unsure select "N".
+-
+ config SND_SOC_AMD_ACP63_TOPLEVEL
+ 	tristate "support for AMD platforms with ACP version >= 6.3"
+ 	default SND_AMD_ACP_CONFIG
+diff --git a/sound/soc/amd/Makefile b/sound/soc/amd/Makefile
+index 4f89d962cce2..23b25ff0d800 100644
+--- a/sound/soc/amd/Makefile
++++ b/sound/soc/amd/Makefile
+@@ -17,5 +17,4 @@ obj-$(CONFIG_SND_SOC_AMD_ACP5x) += vangogh/
+ obj-$(CONFIG_SND_SOC_AMD_ACP6x) += yc/
+ obj-$(CONFIG_SND_AMD_ACP_CONFIG) += acp/
+ obj-$(CONFIG_SND_AMD_ACP_CONFIG) += snd-acp-config.o
+-obj-$(CONFIG_SND_SOC_AMD_RPL_ACP6x) += rpl/
+ obj-$(CONFIG_SND_SOC_AMD_PS) += ps/
 diff --git a/sound/soc/amd/rpl/Makefile b/sound/soc/amd/rpl/Makefile
 deleted file mode 100644
 index a3825c5be4e7..000000000000
