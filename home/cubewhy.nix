@@ -138,6 +138,16 @@
   programs.kitty = {
     enable = true;
     settings = {
+      font_family = "family=\"JetBrainsMono Nerd Font\"";
+      bold_font = "auto";
+      italic_font = "auto";
+      bold_italic_font = "auto";
+
+      font_size = 12.0;
+      disable_ligatures = "always"; # always, never, cursor
+
+      cursor_blink_interval = 0;
+
       repaint_delay = 2;
       input_delay = 0;
       sync_to_monitor = "no";
