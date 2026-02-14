@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }: {
@@ -11,41 +12,60 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod"];
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "usbhid"];
+  boot.supportedFilesystems = ["f2fs"];
+  environment.systemPackages = [pkgs.f2fs-tools];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9d2ae108-ec9e-41fb-8242-47e48ffa90f1";
-    fsType = "ext4";
-  };
-
-  fileSystems."/mnt/data" = {
+  fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/66c240f9-ee0b-43a1-accd-71f66622fd87";
     fsType = "btrfs";
-    options = [
-      "users" # Allows any user to mount and unmount
-      "nofail" # Prevent system from failing if this drive doesn't mount
-      "exec" # Permit execution of binaries and other executable files
-      "x-gvfs-show"
-    ];
+    options = ["subvol=@nix" "compress=zstd"];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/66c240f9-ee0b-43a1-accd-71f66622fd87";
+    fsType = "btrfs";
+    options = ["subvol=@home" "compress=zstd"];
+  };
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/66c240f9-ee0b-43a1-accd-71f66622fd87";
+    fsType = "btrfs";
+    options = ["subvol=@" "compress=zstd"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/5C0E-8F29";
+    device = "/dev/disk/by-uuid/D72E-A57D";
     fsType = "vfat";
     options = ["fmask=0077" "dmask=0077"];
   };
 
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-uuid/8bae9f12-3ffb-4790-961b-aa357e0cfa5a";
+    fsType = "f2fs";
+    options = [
+      "compress_algorithm=zstd"
+      "compress_chksum"
+      "atgc"
+      "gc_merge"
+      "lazytime"
+      "users"
+      "nofail"
+      "x-gvfs-show"
+    ];
+  };
+
   systemd.tmpfiles.rules = [
-    "d /mnt/data 0777 root root -"
+    "d /mnt/data 0777 root root - -"
   ];
 
-  swapDevices = [
-    {device = "/dev/disk/by-uuid/74362763-fb0a-475c-a11e-8a292bcb51f7";}
-  ];
   zramSwap.enable = true;
+  zramSwap.algorithm = "zstd";
+  zramSwap.memoryPercent = 50;
+  zramSwap.priority = 100;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

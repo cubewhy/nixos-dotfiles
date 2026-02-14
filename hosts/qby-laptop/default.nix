@@ -51,6 +51,7 @@
   };
 
   systemd.coredump.enable = false;
+  services.fstrim.enable = true;
 
   boot.kernel.sysctl = {
     "kernel.core_pattern" = "/dev/null";
