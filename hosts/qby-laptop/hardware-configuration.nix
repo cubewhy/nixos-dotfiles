@@ -53,6 +53,7 @@
       "gc_merge"
       "lazytime"
       "users"
+      "exec"
       "nofail"
       "x-gvfs-show"
     ];
