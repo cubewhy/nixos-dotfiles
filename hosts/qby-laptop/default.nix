@@ -143,4 +143,13 @@
       amdgpuBusId = "PCI:06:00:0";
     };
   };
+
+  services.snapper.configs = {
+    home = {
+      SUBVOLUME = "/home";
+      ALLOW_USERS = ["cubewhy"];
+      TIMELINE_CREATE = true;
+      TIMELINE_CLEANUP = true;
+    };
+  };
 }
