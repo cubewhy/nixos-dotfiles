@@ -13,6 +13,21 @@
   };
   virtualisation.oci-containers.backend = "podman";
 
+  systemd.services.podman-restart = {
+    description = "Podman Start All Containers With Restart Policy Set To Always";
+    wantedBy = ["multi-user.target"];
+    after = ["network-online.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = ''
+        ${pkgs.podman}/bin/podman start --all \
+          --filter "restart-policy=always" \
+          --filter "restart-policy=unless-stopped"
+      '';
+    };
+  };
+
   # Useful other development tools
   environment.systemPackages = with pkgs; [
     dive # look into docker image layers
