@@ -7,8 +7,8 @@
     name = "ghidra-scripts-pack";
     src = ./ghidra/scripts;
     installPhase = ''
-      mkdir -p $out
-      cp -r * $out/
+      mkdir -p $out/ghidra_scripts
+      cp -r * $out/ghidra_scripts/
     '';
   };
 in {
@@ -27,7 +27,7 @@ in {
         findcrypt
         ghidra-firmware-utils
         kaiju
-        ghidraScripts
+        # ghidraScripts
       ]))
   ];
 }
