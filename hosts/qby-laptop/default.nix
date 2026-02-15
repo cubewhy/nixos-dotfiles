@@ -17,6 +17,7 @@
     ../../software/heroic-games-launcher.nix
     ../../software/wine.nix
     ../../software/kvm.nix
+    ../../software/flatpak.nix
     ../../software/looking-glass.nix
     ../../software/distrobox.nix
     ../../software/reverse-engineering.nix
@@ -83,6 +84,8 @@
 
   environment.systemPackages = with pkgs; [
     easyeffects
+
+    kdePackages.discover
   ];
 
   boot.kernelParams = [
