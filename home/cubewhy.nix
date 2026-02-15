@@ -46,7 +46,7 @@
     fastfetch
     librewolf
     obs-studio
-    jetbrains.idea
+    # jetbrains.idea
     vscode
     pkgs-unstable.devenv
     claude-code

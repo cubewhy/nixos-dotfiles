@@ -31,7 +31,7 @@
   programs.nix-index-database.comma.enable = true;
 
   nixpkgs.overlays = [
-    (import ./overlays/jetbrains.nix)
+    # (import ./overlays/jetbrains.nix)
     (import ./overlays/opencode.nix)
   ];
 
