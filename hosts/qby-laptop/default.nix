@@ -13,7 +13,7 @@
 
     ../../software/proxy/mihomo/default.nix
     ../../software/wireshark.nix
-    ../../software/steam.nix
+    # ../../software/steam.nix
     ../../software/heroic-games-launcher.nix
     ../../software/wine.nix
     ../../software/kvm.nix
