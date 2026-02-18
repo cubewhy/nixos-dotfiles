@@ -24,6 +24,7 @@
 
   home.packages = with pkgs; [
     git
+    github-cli
     wget
     ripgrep
     fd
