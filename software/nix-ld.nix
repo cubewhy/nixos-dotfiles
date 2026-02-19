@@ -17,19 +17,19 @@
     xz
     systemd
 
-    xorg.libXcomposite
-    xorg.libXtst
-    xorg.libXrandr
-    xorg.libXext
-    xorg.libX11
-    xorg.libXfixes
+    libXcomposite
+    libXtst
+    libXrandr
+    libXext
+    libX11
+    libXfixes
     libGL
     libva
     pipewire
-    xorg.libxcb
-    xorg.libXdamage
-    xorg.libxshmfence
-    xorg.libXxf86vm
+    libxcb
+    libXdamage
+    libxshmfence
+    libXxf86vm
     libglvnd
     libelf
     libepoxy
@@ -49,13 +49,13 @@
     pciutils
     zenity
 
-    xorg.libXinerama
-    xorg.libXcursor
-    xorg.libXrender
-    xorg.libXScrnSaver
-    xorg.libXi
-    xorg.libSM
-    xorg.libICE
+    libXinerama
+    libXcursor
+    libXrender
+    libXScrnSaver
+    libXi
+    libSM
+    libICE
     gnome2.GConf
     nspr
     nss
@@ -72,8 +72,8 @@
     libnotify
     gsettings-desktop-schemas
 
-    xorg.libXt
-    xorg.libXmu
+    libXt
+    libXmu
     libogg
     libvorbis
     SDL
@@ -106,7 +106,7 @@
     libgcrypt
     libvpx
     librsvg
-    xorg.libXft
+    libXft
     libvdpau
     pango
     cairo
