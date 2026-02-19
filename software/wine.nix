@@ -1,7 +1,7 @@
 # Run `nix-shell -p winetricks --command winetricks`
 # to get the workaround for Windows dependencies.
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
+{pkgs-stable, ...}: {
+  environment.systemPackages = with pkgs-stable; [
     wineWowPackages.stableFull
   ];
 }
