@@ -109,10 +109,13 @@
   ];
 
   boot.kernelPatches = [
-    {
-      name = "rpl-dmic-support";
-      patch = ../../patches/rpl-add-dmic-support.patch;
-    }
+    # Temporary disabled this patch since it takes 18min to compile the entire kernel each time
+    # I update my system
+
+    # {
+    #   name = "rpl-dmic-support";
+    #   patch = ../../patches/rpl-add-dmic-support.patch;
+    # }
   ];
 
   # boot.extraModulePackages = with config.boot.kernelPackages; [
