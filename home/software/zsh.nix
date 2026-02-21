@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   programs.zsh = {
     enable = true;
 
@@ -18,7 +18,8 @@
       v = "zi && nvim";
     };
 
-    initExtra = ''
+    initContent = lib.mkOrder 550 ''
+      ZSH_DISABLE_COMPFIX="true"
     '';
   };
 }
