@@ -148,9 +148,9 @@
 
       cursor_blink_interval = 0;
 
-      repaint_delay = 2;
-      input_delay = 0;
-      sync_to_monitor = "no";
+      # repaint_delay = 2;
+      # input_delay = 0;
+      # sync_to_monitor = "no";
     };
   };
 
