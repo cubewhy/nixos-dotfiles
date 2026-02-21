@@ -34,6 +34,7 @@
     kdePackages.kdialog
     kdePackages.filelight
     kdePackages.kfind
+    kdePackages.plasma-vault
 
     # (pkgs.kdePackages.spectacle.override
     #   {tesseractLanguages = ["eng" "chi_sim" "chi_tra"];})
