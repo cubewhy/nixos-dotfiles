@@ -35,9 +35,8 @@
     kdePackages.filelight
     kdePackages.kfind
 
-    # Spectacle deps
-    (pkgs.kdePackages.spectacle.override
-      {tesseractLanguages = ["eng" "chi_sim" "chi_tra"];})
+    # (pkgs.kdePackages.spectacle.override
+    #   {tesseractLanguages = ["eng" "chi_sim" "chi_tra"];})
 
     # Ark dependencies
     rar
