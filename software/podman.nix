@@ -13,9 +13,9 @@
   };
   virtualisation.oci-containers.backend = "podman";
 
-  systemd.services.podman-restart = {
-    description = "Podman Start All Containers With Restart Policy Set To Always";
-    wantedBy = ["multi-user.target"];
+  systemd.user.services.podman-restart = {
+    description = "Podman Start Containers";
+    wantedBy = ["default.target"];
     wants = ["network.target"];
     after = ["network.target"];
     serviceConfig = {
