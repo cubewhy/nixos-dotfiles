@@ -4,7 +4,8 @@
 
     ./software/nix-ld.nix
     ./software/fcitx5.nix
-    ./software/podman.nix
+    # ./software/podman.nix
+    ./software/docker.nix
     ./software/direnv.nix
     # ./software/auto-gc.nix
     ./software/dev/python.nix

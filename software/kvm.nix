@@ -13,4 +13,7 @@
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
+
+  virtualisation.libvirtd.allowedBridges = ["nm-bridge" "virbr0"];
+  services.dnsmasq.enable = false;
 }

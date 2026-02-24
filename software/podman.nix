@@ -13,20 +13,30 @@
   };
   virtualisation.oci-containers.backend = "podman";
 
-  systemd.user.services.podman-restart = {
-    description = "Podman Start Containers";
-    wantedBy = ["default.target"];
-    wants = ["network.target"];
-    after = ["network.target"];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = ''
-        ${pkgs.podman}/bin/podman start --all \
-          --filter "restart-policy=always" \
-          --filter "restart-policy=unless-stopped"
-      '';
-    };
+  # systemd.user.services.podman-restart = {
+  #   description = "Podman Start Containers";
+  #   wantedBy = ["default.target"];
+  #   wants = ["network.target"];
+  #   after = ["network.target"];
+  #
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = true;
+  #     ExecStart = ''
+  #       ${pkgs.podman}/bin/podman start --all \
+  #         --filter "restart-policy=always" \
+  #         --filter "restart-policy=unless-stopped"
+  #     '';
+  #   };
+  # };
+
+  networking.firewall = {
+    trustedInterfaces = ["podman0"];
+
+    extraCommands = ''
+      iptables -A INPUT -i podman+ -p udp --dport 53 -j ACCEPT
+      iptables -A INPUT -i podman+ -p tcp --dport 53 -j ACCEPT
+    '';
   };
 
   # Useful other development tools

@@ -5,7 +5,11 @@
 # Switch node with the webui
 # http://127.0.0.1:9090/ui
 # Never open the 23001 and 9090 port to the public!
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ../substore.nix
   ];
@@ -20,10 +24,6 @@
   boot.kernelModules = [
     "tun"
   ];
-
-  networking.firewall = {
-    checkReversePath = "loose";
-  };
 
   services.mihomo = {
     enable = true;
@@ -40,10 +40,27 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = ["utun" "virbr0"];
+    enable = lib.mkForce false;
+    trustedInterfaces = ["utun" "virbr0" "docker0" "lo"];
+
+    checkReversePath = "loose";
 
     allowedUDPPorts = [53 1053];
     allowedTCPPorts = [53 1053];
+
+    extraCommands = ''
+      iptables -A FORWARD -i docker0 -j ACCEPT
+      iptables -A FORWARD -o docker0 -j ACCEPT
+      iptables -A FORWARD -i br-+ -j ACCEPT
+      iptables -A FORWARD -o br-+ -j ACCEPT
+
+      iptables -t nat -A PREROUTING -i docker0 -p udp --dport 53 -j REDIRECT --to-ports 1053
+      iptables -t nat -A PREROUTING -i docker0 -p tcp --dport 53 -j REDIRECT --to-ports 1053
+      iptables -t nat -A PREROUTING -i br-+ -p udp --dport 53 -j REDIRECT --to-ports 1053
+      iptables -t nat -A PREROUTING -i br-+ -p tcp --dport 53 -j REDIRECT --to-ports 1053
+
+      iptables -t nat -A POSTROUTING -s 172.16.0.0/12 -j MASQUERADE
+    '';
   };
 
   networking.nat = {
@@ -51,4 +68,15 @@
     internalInterfaces = ["virbr0"];
     externalInterface = "utun";
   };
+
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = 1;
+    "net.ipv4.conf.all.rp_filter" = 0;
+    "net.ipv4.conf.default.rp_filter" = 0;
+    "net.ipv4.conf.docker0.rp_filter" = 0;
+    "net.ipv4.conf.utun.rp_filter" = 0;
+  };
+
+  # services.resolved.enable = false;
+  # networking.nameservers = ["127.0.0.1"];
 }

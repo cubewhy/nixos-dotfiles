@@ -124,7 +124,7 @@
 
   boot.tmp.useTmpfs = true;
 
-  systemd.services.NetworkManager-wait-online.enable = false;
+  # systemd.services.NetworkManager-wait-online.enable = false;
   networking.networkmanager.wifi.powersave = false;
 
   programs.firejail.enable = true;
