@@ -10,7 +10,7 @@
     oh-my-zsh = {
       enable = true;
       plugins = ["git" "zoxide" "dirhistory"];
-      theme = "fino-time";
+      theme = "robbyrussell";
     };
 
     shellAliases = {
