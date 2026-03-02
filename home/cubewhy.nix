@@ -118,19 +118,40 @@
 
   programs.bash.enable = true;
 
-  # programs.alacritty = {
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      terminal = {
+        osc52 = "CopyPaste";
+      };
+      # selection = {
+      #   save_to_clipboard = true;
+      # };
+      font = {
+        size = 12.0;
+        normal = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Regular";
+        };
+        bold = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Bold";
+        };
+      };
+    };
+  };
+
+  programs.ghostty = {
+    enable = true;
+  };
+
+  # programs.helix = {
   #   enable = true;
   #   settings = {
-  #     font = {
-  #       size = 12.0;
-  #       normal = {
-  #         family = "JetBrainsMono Nerd Font";
-  #         style = "Regular";
-  #       };
-  #       bold = {
-  #         family = "JetBrainsMono Nerd Font";
-  #         style = "Bold";
-  #       };
+  #     theme = "catppuccin_mocha";
+  #     editor = {
+  #       line-number = "relative";
+  #       lsp.display-messages = true;
   #     };
   #   };
   # };
@@ -147,6 +168,7 @@
       disable_ligatures = "always"; # always, never, cursor
 
       cursor_blink_interval = 0;
+      clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
 
       # repaint_delay = 2;
       # input_delay = 0;

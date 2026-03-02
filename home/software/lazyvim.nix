@@ -45,35 +45,41 @@
       "${pkgs.sqlite.out}/lib/libsqlite3.so"
     ];
 
+    plugins = with pkgs.vimPlugins; [
+      (nvim-treesitter.withPlugins (p: [p.tree-sitter-rust p.tree-sitter-toml p.tree-sitter-nix p.tree-sitter-lua]))
+    ];
+
     extraPackages = with pkgs; [
       # -- Dependencies for specific plugins --
       nodejs
+      yarn
       tree-sitter
+      ast-grep
 
       # Uncomment these lines if you want to view images inside nvim
-      # imagemagick
+      imagemagick
       # mermaid-cli
       # tectonic
 
       # LSP
       nixd
-      clang-tools
-      lua-language-server
-      basedpyright
-      bash-language-server
-      vscode-langservers-extracted
-      docker-ls
-      docker-compose-language-service
-      yaml-language-server
-      vtsls
-      tailwindcss-language-server
-      taplo
-      ruff
-      eslint
-      ember-language-server
-      cmake-language-server
-      marksman
-      gopls
+      # clang-tools
+      # lua-language-server
+      # basedpyright
+      # bash-language-server
+      # vscode-langservers-extracted
+      # docker-ls
+      # docker-compose-language-service
+      # yaml-language-server
+      # vtsls
+      # tailwindcss-language-server
+      # taplo
+      # ruff
+      # eslint
+      # ember-language-server
+      # cmake-language-server
+      # marksman
+      # gopls
 
       # Formatters
       stylua
