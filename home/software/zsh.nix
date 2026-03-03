@@ -19,6 +19,7 @@
 
     initContent = lib.mkOrder 550 ''
       ZSH_DISABLE_COMPFIX="true"
+      export DISTROBOX_ENTER_PATH="/run/current-system/sw/bin/distrobox-enter"
     '';
   };
 }
