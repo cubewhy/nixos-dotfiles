@@ -87,28 +87,25 @@
   ];
 
   boot.kernelParams = [
-    "quiet"
-    "splash"
     "amd_iommu=on"
     "iommu=pt"
     "amdgpu.dcdebugmask=0x10"
     "nvidia.NVreg_DynamicPowerManagement=0x00"
   ];
 
-  boot.plymouth = {
-    enable = true;
-  };
-
-  boot.consoleLogLevel = 0;
-  boot.initrd.verbose = false;
+  # boot.plymouth = {
+  #   enable = true;
+  # };
+  #
+  # boot.consoleLogLevel = 0;
+  # boot.initrd.verbose = false;
 
   boot.blacklistedKernelModules = [
     "redmi-wmi"
   ];
 
   boot.kernelPatches = [
-    # Temporary disabled this patch since it takes 18min to compile the entire kernel each time
-    # I update my system
+    # already merged into mainline, no need anymore on Linux 7.0+
 
     # {
     #   name = "rpl-dmic-support";
