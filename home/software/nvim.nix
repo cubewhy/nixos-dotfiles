@@ -1,9 +1,9 @@
-# This script auto clones my lazyvim dotfiles into ~/.config/nvim
-# https://github.com/cubewhy/.lazyvim
+# This script auto clones my nvim dotfiles into ~/.config/nvim
+# https://github.com/cubewhy/.nvim
 #
 # Notes:
 # 1. nix-ld configuration should be loaded to use LSP in nvim
-# 2. You should always run `git pull` to update the LazyVim dotfiles manually.
+# 2. You should always run `git pull` to update the Neovim dotfiles manually.
 # Call `git pull` inside .nix is not a good practice.
 {
   pkgs,
@@ -11,9 +11,9 @@
   lib,
   ...
 }: {
-  home.activation.installLazyVim = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.installNvimDotfiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
     NVIM_CONFIG="${config.home.homeDirectory}/.config/nvim"
-    REPO_URL="https://github.com/cubewhy/.lazyvim"
+    REPO_URL="https://github.com/cubewhy/.nvim"
 
     if [ ! -d "$NVIM_CONFIG" ]; then
       ${pkgs.git}/bin/git clone "$REPO_URL" "$NVIM_CONFIG"

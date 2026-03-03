@@ -5,7 +5,7 @@
   ...
 }: {
   imports = [
-    ./software/lazyvim.nix
+    ./software/nvim.nix
     ./software/rime.nix
     ./software/git-pagers.nix
     ./software/zsh.nix
